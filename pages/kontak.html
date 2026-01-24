@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak - Didaktika AI</title>
+    <meta name="description" content="Hubungi kami untuk pertanyaan, masukan, dan kerja sama di bidang pendidikan. Email dukungan: support@didaktika.ai">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#0a0a0a',
+                        foreground: '#ededed',
+                        card: '#121212',
+                        'card-foreground': '#ededed',
+                        primary: '#3b82f6',
+                        'primary-foreground': '#ffffff',
+                        muted: '#1a1a1a',
+                        'muted-foreground': '#a3a3a3',
+                        border: '#262626',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-foreground min-h-screen">
+    
+    <main class="container mx-auto px-4 py-12 md:py-20 max-w-3xl">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-balance">
+                Kontak
+            </h1>
+            <p class="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
+                Kami terbuka terhadap pertanyaan, masukan, dan kerja sama di bidang pendidikan.
+            </p>
+        </header>
+
+        <!-- Contact Card -->
+        <div class="bg-card border border-border rounded-lg p-8 md:p-10 mb-8">
+            
+            <!-- Email Section -->
+            <div class="mb-8">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold mb-2">Email Dukungan</h2>
+                        <a href="mailto:support@didaktika.ai" class="text-primary hover:underline text-lg">
+                            support@didaktika.ai
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separator -->
+            <div class="border-t border-border my-8"></div>
+
+            <!-- Purpose Section -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Tujuan Kontak</h3>
+                <ul class="space-y-3 text-muted-foreground">
+                    <li class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Pertanyaan penggunaan platform</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Masukan dan saran pengembangan</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Kerja sama di bidang pendidikan</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Footer Note -->
+        <div class="text-center">
+            <p class="text-sm text-muted-foreground">
+                Kami akan berusaha merespons pesan Anda dalam 1-2 hari kerja.
+            </p>
+        </div>
+
+    </main>
+
+</body>
+</html>

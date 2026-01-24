@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Didaktika AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f1629 0%, #1a2847 50%, #141d2f 100%);
+            color: #e5e7eb;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Animated gradient background elements */
+        .gradient-blob-1 {
+            position: fixed;
+            top: -10%;
+            right: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .gradient-blob-2 {
+            position: fixed;
+            bottom: 10%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #c7d2fe;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(148, 163, 184, 0.3);
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-4px);
+        }
+
+        .mission-list {
+            list-style: none;
+        }
+
+        .mission-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.0625rem;
+            line-height: 1.6;
+        }
+
+        .mission-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #a78bfa;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: rgba(167, 139, 250, 0.4);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+            transform: translateY(-4px);
+        }
+
+        .value-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #a78bfa;
+        }
+
+        .value-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 1.0625rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button-secondary {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            background: transparent;
+            color: white;
+            border: 1.5px solid rgba(167, 139, 250, 0.5);
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-button-secondary:hover {
+            border-color: rgba(167, 139, 250, 1);
+            background: rgba(167, 139, 250, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .value-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-blob-1"></div>
+    <div class="gradient-blob-2"></div>
+
+    <div class="content">
+        <!-- Navigation -->
+        <nav class="px-4 sm:px-6 lg:px-8 py-6 border-b border-slate-700/30">
+            <div class="max-w-6xl mx-auto flex items-center justify-between">
+                <div class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Didaktika AI
+                </div>
+                <div class="hidden sm:flex gap-8 text-sm">
+                    <a href="#" class="text-slate-300 hover:text-white transition">Beranda</a>
+                    <a href="#" class="text-slate-300 hover:text-white transition">Fitur</a>
+                    <a href="#" class="text-slate-300 hover:text-white transition">Tentang</a>
+                    <a href="#" class="text-slate-300 hover:text-white transition">Kontak</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="px-4 sm:px-6 lg:px-8 py-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="section-title text-4xl sm:text-5xl mb-6 pb-8">
+                    Tentang Didaktika AI
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-300 leading-relaxed">
+                    Membantu guru mengajar lebih efektif melalui pendekatan pembelajaran yang adaptif.
+                </p>
+            </div>
+        </section>
+
+        <!-- Latar Belakang Section -->
+        <section class="px-4 sm:px-6 lg:px-8 py-16">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="section-subtitle">Latar Belakang</h2>
+                <div class="card">
+                    <p class="text-slate-300 leading-relaxed text-lg">
+                        Setiap siswa memiliki cara belajar yang berbeda. Namun, guru sering dihadapkan pada keterbatasan waktu dan sumber daya untuk menyesuaikan metode pembelajaran. Didaktika AI hadir sebagai solusi untuk membantu guru menyajikan materi secara lebih personal dan efektif.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visi Section -->
+        <section class="px-4 sm:px-6 lg:px-8 py-16">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="section-subtitle">Visi</h2>
+                <div class="card">
+                    <p class="text-slate-300 leading-relaxed text-lg">
+                        Mewujudkan pembelajaran yang inklusif, adaptif, dan berpusat pada kebutuhan setiap siswa.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Misi Section -->
+        <section class="px-4 sm:px-6 lg:px-8 py-16">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="section-subtitle">Misi</h2>
+                <div class="card">
+                    <ul class="mission-list">
+                        <li>Membantu guru dalam menyusun materi pembelajaran secara efisien</li>
+                        <li>Mendukung berbagai gaya belajar siswa</li>
+                        <li>Menghadirkan teknologi AI yang mudah digunakan di lingkungan pendidikan</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nilai Utama Section -->
+        <section class="px-4 sm:px-6 lg:px-8 py-16">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-subtitle">Nilai yang Kami Junjung</h2>
+                <div class="value-grid">
+                    <div class="value-card">
+                        <h3>Berpusat pada Guru</h3>
+                        <p>AI sebagai alat bantu, bukan pengganti peran guru. Kami percaya teknologi harus memperkuat, bukan menggantikan keahlian pendidik.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>Pembelajaran Personal</h3>
+                        <p>Materi disesuaikan dengan karakter dan kebutuhan siswa. Setiap individu adalah unik dan berhak mendapat pendekatan yang personal.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>Teknologi Bertanggung Jawab</h3>
+                        <p>Mengutamakan etika dan dampak positif dalam pendidikan. Kami berkomitmen untuk menciptakan solusi yang berkelanjutan dan bertanggung jawab.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Penutup Section -->
+        <section class="px-4 sm:px-6 lg:px-8 py-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-lg sm:text-xl text-slate-300 leading-relaxed mb-8">
+                    Didaktika AI dikembangkan untuk menjadi mitra guru dalam menciptakan proses belajar yang lebih bermakna.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="fitur.html" class="cta-button focus:outline-none focus:ring-0">Lihat Fitur</a>
+                    <a href="data-siswa.html" class="cta-button-secondary focus:outline-none focus:ring-0">Coba Demo</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

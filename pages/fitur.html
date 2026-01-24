@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitur Unggulan - Didaktika AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --color-bg-dark: #0f0f1e;
+      --color-bg-card: #1a1a2e;
+      --color-primary: #6366f1;
+      --color-primary-light: #818cf8;
+      --color-accent: #06b6d4;
+      --color-accent-light: #22d3ee;
+      --color-text-primary: #f1f5f9;
+      --color-text-secondary: #cbd5e1;
+      --color-border: #334155;
+    }
+
+    body {
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    }
+
+    .gradient-heading {
+      background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-bg-card);
+    }
+
+    .card-hover:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.1), 0 10px 10px -5px rgba(99, 102, 241, 0.04);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .icon-visual {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+    }
+
+    .icon-audio {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(34, 211, 238, 0.1) 100%);
+    }
+
+    .icon-text {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+    }
+
+    .icon-personalize {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .support-card {
+      background-color: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .support-card:hover {
+      border-color: var(--color-accent);
+      background-color: rgba(6, 182, 212, 0.05);
+    }
+
+    .highlight-point {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .highlight-check {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: rgba(6, 182, 212, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full backdrop-blur-md bg-opacity-90 border-b border-opacity-10 border-slate-400 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="text-2xl font-bold gradient-heading">Didaktika AI</div>
+      <a href="data-siswa.html" class="px-6 py-2 rounded-full bg-slate-100 text-slate-900 font-medium hover:bg-white transition">Coba Demo</a>
+    </div>
+  </nav>
+
+  <!-- Header Section -->
+  <section class="pt-32 pb-20 px-6 text-center">
+    <h1 class="text-5xl md:text-6xl font-bold mb-8 leading-tight gradient-heading pb-8">Fitur Unggulan</h1>
+    <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed ">
+      Dirancang untuk membantu guru mengajar lebih efektif dan personal
+    </p>
+  </section>
+
+  <!-- Core Features Grid -->
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Feature 1 -->
+      <div class="card-hover rounded-xl p-8">
+        <div class="feature-icon icon-visual mb-6">📚</div>
+        <h3 class="text-xl font-semibold mb-4">Transformasi Materi Pembelajaran</h3>
+        <p class="text-slate-400 leading-relaxed">
+          Satu materi diubah secara otomatis menjadi format visual, audio, dan teks untuk memenuhi berbagai preferensi belajar siswa.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="card-hover rounded-xl p-8">
+        <div class="feature-icon icon-audio mb-6">🎯</div>
+        <h3 class="text-xl font-semibold mb-4">Analisis Gaya Belajar Siswa</h3>
+        <p class="text-slate-400 leading-relaxed">
+          Sistem mengidentifikasi kecenderungan belajar siswa berdasarkan interaksi dan hasil belajar untuk personalisasi yang mendalam.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="card-hover rounded-xl p-8">
+        <div class="feature-icon icon-text mb-6">💡</div>
+        <h3 class="text-xl font-semibold mb-4">Rekomendasi Metode Pembelajaran</h3>
+        <p class="text-slate-400 leading-relaxed">
+          Guru mendapatkan saran metode pembelajaran yang paling sesuai untuk kelas berdasarkan analisis data pembelajaran real-time.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="card-hover rounded-xl p-8">
+        <div class="feature-icon icon-personalize mb-6">✨</div>
+        <h3 class="text-xl font-semibold mb-4">Personalisasi Materi</h3>
+        <p class="text-slate-400 leading-relaxed">
+          Materi disesuaikan agar lebih mudah dipahami oleh berbagai karakter siswa dengan kompleksitas yang tepat untuk setiap level.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Supporting Features Section -->
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <h2 class="text-3xl font-bold mb-12 text-center">Fitur Pendukung</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="support-card">
+        <div class="text-2xl mb-3">📋</div>
+        <h4 class="font-semibold mb-2">Ringkasan Materi Otomatis</h4>
+        <p class="text-sm text-slate-400">Buat ringkasan dalam hitungan detik</p>
+      </div>
+      <div class="support-card">
+        <div class="text-2xl mb-3">👥</div>
+        <h4 class="font-semibold mb-2">Dukungan Berbagai Gaya Belajar</h4>
+        <p class="text-sm text-slate-400">Visual, audio, kinestetik, dan membaca</p>
+      </div>
+      <div class="support-card">
+        <div class="text-2xl mb-3">⚡</div>
+        <h4 class="font-semibold mb-2">Konten Siap Digunakan</h4>
+        <p class="text-sm text-slate-400">Langsung implementasikan di kelas</p>
+      </div>
+      <div class="support-card">
+        <div class="text-2xl mb-3">🎨</div>
+        <h4 class="font-semibold mb-2">Tampilan Ramah Guru</h4>
+        <p class="text-sm text-slate-400">Interface intuitif dan mudah digunakan</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlight Section -->
+  <section class="max-w-4xl mx-auto px-6 py-20 text-center">
+    <h2 class="text-4xl font-bold mb-12">Kenapa Fitur Ini Penting?</h2>
+    <div class="space-y-6">
+      <div class="highlight-point">
+        <div class="highlight-check">✓</div>
+        <p class="text-lg text-slate-300 text-left">Membantu guru fokus mengajar, bukan menyiapkan materi pembelajaran dari nol</p>
+      </div>
+      <div class="highlight-point">
+        <div class="highlight-check">✓</div>
+        <p class="text-lg text-slate-300 text-left">Mengurangi beban kerja administratif hingga 70% sehingga guru punya lebih banyak waktu untuk siswa</p>
+      </div>
+      <div class="highlight-point">
+        <div class="highlight-check">✓</div>
+        <p class="text-lg text-slate-300 text-left">Meningkatkan pemahaman siswa melalui pembelajaran yang disesuaikan dengan gaya dan kecepatan belajar mereka</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="cta" class="max-w-4xl mx-auto px-6 py-20 text-center">
+    <div class="card-hover rounded-2xl p-12 bg-gradient-to-br from-indigo-500/5 to-cyan-500/5">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Siap Mengubah Cara Mengajar?</h2>
+      <p class="text-lg text-slate-400 mb-8">Rasakan pengalaman mengajar yang lebih efisien dan personal dengan Didaktika AI</p>
+      <button class="cta-button text-white px-8 py-4 rounded-lg font-semibold text-lg">
+        Coba Demo Sekarang
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 mt-20 py-12 px-6">
+    <div class="max-w-7xl mx-auto text-center text-slate-500">
+      <p>&copy; 2024 Didaktika AI. Memberdayakan Pendidikan Indonesia.</p>
+    </div>
+  </footer>
+</body>
+</html>

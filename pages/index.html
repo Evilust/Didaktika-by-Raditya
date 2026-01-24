@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DidaktikaAI - Intelligent Teaching Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+<style>
+  @keyframes orbitOnce {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .orbit-animate {
+    animation: orbitOnce 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased">
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <a href="#" class="text-xl font-bold text-white">Didaktika<span class="text-cyan-400">AI</span></a>
+      <ul class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+        <li><a href="fitur.html" class="hover:text-white transition-colors">Fitur</a></li>
+        <li><a href="cara kerja.html" class="hover:text-white transition-colors">Cara kerja</a></li>
+        <li><a href="Tentang.html" class="hover:text-white transition-colors">Tentang</a></li>
+      </ul>
+      <a href="data-siswa.html" class="hidden sm:inline-flex px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-medium rounded-lg text-sm transition-colors">
+        Ayo mulai
+      </a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center overflow-visible pt-20">
+      <!-- Background Glow Effects -->
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-slate-800/30 rounded-full blur-3xl"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div data-aos="fade-right" class="text-center lg:text-left">
+            <span  class="inline-block px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 text-sm font-medium mb-6">
+              Metode pendidikan yang didukung oleh AI
+            </span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-balance">
+              Ubah cara
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400"> Mengajarmu </span>
+              dengan AI
+            </h1>
+            <p class="mt-6 text-lg text-slate-400 leading-relaxed max-w-xl mx-auto lg:mx-0 text-pretty">
+              Berdayakan setiap siswa dengan pembelajaran yang dipersonalisasi. AI kami menganalisis gaya belajar individu dan mengubah materi Anda menjadi format visual, audio, atau teks untuk dampak maksimal.
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <a href="data-siswa.html" class="px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-900 font-semibold rounded-xl text-center transition-all shadow-lg shadow-cyan-500/25">
+                Coba demo AI
+              </a>
+              <a href="cara kerja.html" class="px-8 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium rounded-xl text-center transition-colors">
+                Pelajari selengkapnya
+              </a>
+            </div>
+          </div>
+
+          <!-- Decorative Visual Area -->
+          <div class="relative hidden lg:block">
+            <div class="aspect-square max-w-lg mx-auto relative">
+              <!-- Outer Ring -->
+              <div id="orbit-ring" class="absolute inset-0 rounded-full border border-slate-700/50"></div>
+              <div id="orbit-ring" class="absolute inset-8 rounded-full border border-slate-600/40"></div>
+              <div id="orbit-ring" class="absolute inset-16 rounded-full border border-cyan-500/20"></div>
+              <!-- Center Glow -->
+              <div class="absolute inset-24 rounded-full bg-gradient-to-br from-cyan-500/30 to-indigo-500/30 blur-xl"></div>
+              <div class="absolute inset-28 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center">
+                <div class="text-center">
+                  <div class="w-24 h-24 mx-auto mb-3  flex items-center justify-center">
+                    <img src="../assets/img/logo edutech.png" class="text-sm font-medium text-slate-300"></span>
+                  </div>
+                  <div>
+                    <h1 class="items-center font-semibold">Didaktika <span class="text-cyan-400"> AI </span></h1>
+                  </div>
+
+                </div>
+              </div>
+              <!-- Floating Elements -->
+              <div class="absolute top-8 right-12 px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-lg backdrop-blur-sm">
+                <span class="text-xs text-cyan-400">Visual</span>
+              </div>
+              <div class="absolute bottom-20 left-4 px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-lg backdrop-blur-sm">
+                <span class="text-xs text-indigo-400">Audio</span>
+              </div>
+              <div class="absolute bottom-8 right-20 px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-lg backdrop-blur-sm">
+                <span class="text-xs text-emerald-400">Text</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="relative py-24 lg:py-32">
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Mode Pembelajaran</span>
+          <h2 data-aos="fade-right"class="mt-3 text-3xl sm:text-4xl font-bold text-balance">Tiga Cara untuk Belajar, Satu AI Cerdas</h2>
+          <p class="mt-4 text-slate-400 text-lg">
+            Unggah materi pengajaran Anda dan biarkan AI kami mengubahnya menjadi format yang paling sesuai untuk setiap siswa.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <!-- Visual Learning -->
+          <article data-aos="fade-right"style="opacity:1 !important" class="group relative p-8 bg-slate-900/50 border border-slate-800 rounded-2xl hover:border-cyan-500/30 transition-colors">
+            <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative">
+              <div class="w-14 h-14 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
+                <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Pembelajaran Visual</h3>
+              <p class="text-slate-400 leading-relaxed">
+                Ubah konsep-konsep kompleks menjadi diagram, infografis, dan representasi visual yang menarik sehingga pembelajaran menjadi intuitif.
+              </p>
+            </div>
+          </article>
+
+          <!-- Audio Learning -->
+          <article data-aos="fade-up" class="group relative p-8 bg-slate-900/50 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-colors">
+            <div class="absolute inset-0 bg-gradient-to-b from-indigo-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative">
+              <div class="w-14 h-14 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6">
+                <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Pembelajaran Audio</h3>
+              <p class="text-slate-400 leading-relaxed">
+                Hasilkan narasi dan penjelasan yang terdengar alami, sempurna untuk pembelajar auditori yang menyerap informasi dengan mendengarkan.
+              </p>
+            </div>
+          </article>
+
+          <!-- Text Learning -->
+          <article data-aos="fade-left" class="group relative p-8 bg-slate-900/50 border border-slate-800 rounded-2xl hover:border-emerald-500/30 transition-colors">
+            <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative">
+              <div class="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6">
+                <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Text Learning</h3>
+              <p class="text-slate-400 leading-relaxed">
+                Buat catatan terstruktur, ringkasan, dan panduan tertulis untuk siswa yang lebih menyukai membaca dan metode belajar tradisional.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Proses</span>
+          <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-balance">Bagaimana Didaktika <span class="text-cyan-400">AI</span> bekerja</h2>
+          <p class="mt-4 text-slate-400 text-lg">
+            Proses sederhana empat langkah untuk merevolusi pengalaman kelas Anda.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Step 1 -->
+          <div class="relative text-center">
+            <div class="w-12 h-12 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyan-500 to-cyan-400 flex items-center justify-center text-slate-900 font-bold text-lg">
+              1
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Unggah konten</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Para guru mengunggah materi pembelajaran, rencana pelajaran, atau konten kurikulum mereka.
+            </p>
+            <div class="hidden lg:block absolute top-6 left-full w-full h-px bg-gradient-to-r from-cyan-500/50 to-transparent"></div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="relative text-center">
+            <div class="w-12 h-12 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyan-400 to-indigo-500 flex items-center justify-center text-white font-bold text-lg">
+              2
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Transformasi AI</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              AI kami mengubah materi menjadi format pembelajaran berbasis visual, audio, dan teks.
+            </p>
+            <div class="hidden lg:block absolute top-6 left-full w-full h-px bg-gradient-to-r from-indigo-500/50 to-transparent"></div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="relative text-center">
+            <div class="w-12 h-12 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-400 flex items-center justify-center text-white font-bold text-lg">
+              3
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Analisis Siswa</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              AI tersebut menganalisis pola dan preferensi belajar setiap siswa dari waktu ke waktu.
+            </p>
+            <div class="hidden lg:block absolute top-6 left-full w-full h-px bg-gradient-to-r from-indigo-400/50 to-transparent"></div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="text-center">
+            <div class="w-12 h-12 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-400 to-emerald-400 flex items-center justify-center text-slate-900 font-bold text-lg">
+              4
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Dapatkan Rekomendasi</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Dapatkan rekomendasi strategi pengajaran yang dipersonalisasi untuk setiap siswa.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / CTA Section -->
+    <section id="about" class="relative py-24 lg:py-32 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-slate-950"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-500/10 rounded-full blur-3xl"></div>
+
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance">
+          Siap untuk Personalisasi
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400"> Edukasi</span>?
+        </h2>
+        <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          Bergabunglah dengan ribuan pendidik yang sudah menggunakan AI untuk memahami siswa mereka dengan lebih baik dan memberikan pelajaran yang lebih efektif.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="data-siswa.html" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-500/20">
+            Coba demo
+          </a>
+         
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <a href="#" class="text-xl font-bold text-white">Dikdatika<span class="text-cyan-400">AI</span></a>
+        <nav class="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
+          <a href="kebijakan privasi.html" class="hover:text-white transition-colors">Privasi</a>
+          <a href="ketentuan.html" class="hover:text-white transition-colors">Ketentuan</a>
+          <a href="kontak.html" class="hover:text-white transition-colors">Kontak</a>
+          <a href="dukungan.html" class="hover:text-white transition-colors">Dukungan</a>
+        </nav>
+        <p class="text-sm text-slate-500">© 2026 DikdatikaAI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 1000,
+      easing: 'ease-out-cubic'
+    });
+  </script>
+  <script>
+    const orbit = document.getElementById("orbit-ring");
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          orbit.classList.add("orbit-animate");
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.6 }
+    );
+    
+    observer.observe(orbit);
+    </script>
+</body>
+</html>

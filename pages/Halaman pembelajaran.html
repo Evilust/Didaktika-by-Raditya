@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konten Pembelajaran — AI Content Converter | Didaktika</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 25%, #312e81 50%, #4c1d95 75%, #2e1065 100%);
+      background-attachment: fixed;
+      color: #e5e7eb;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.5));
+      backdrop-filter: blur(10px);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    .glow {
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
+    }
+
+    .learning-card {
+      transition: all 0.3s ease;
+    }
+
+    .learning-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.2);
+    }
+
+    textarea, input {
+      background: rgba(15, 23, 42, 0.6) !important;
+      border-color: rgba(99, 102, 241, 0.2) !important;
+      color: #e5e7eb !important;
+    }
+
+    textarea::placeholder, input::placeholder {
+      color: rgba(148, 163, 184, 0.5) !important;
+    }
+
+    .conversion-spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <header class="sticky top-0 bg-slate-900/60 backdrop-blur z-10 border-b border-indigo-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold px-3 py-2 rounded-md shadow-md">
+          Didaktika
+        </div>
+        <h1 class="text-xl font-semibold text-slate-100">Konversi Materi Pembelajaran — AI Demo</h1>
+      </div>
+      <nav aria-label="Primary" class="flex items-center gap-3">
+        <a href="index.html" class="text-sm text-slate-300 hover:text-slate-100">← Kembali</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Input Section -->
+    <section class="card glow rounded-xl p-6 border mb-8">
+      <header>
+        <h2 class="text-2xl font-semibold text-slate-100">Masukkan Materi Pembelajaran</h2>
+        <p class="text-slate-400 mt-2">Sistem AI akan otomatis mengkonversi materi Anda ke berbagai metode pembelajaran untuk memenuhi gaya belajar siswa yang berbeda.</p>
+      </header>
+
+      <div class="mt-6 space-y-4">
+        <!-- Material Input -->
+        <div>
+          <label for="materialInput" class="block text-sm font-medium text-slate-100 mb-2">
+            Materi Pembelajaran
+          </label>
+          <textarea
+            id="materialInput"
+            placeholder="Contoh: Tuliskan materi pembelajaran Anda di sini. Sistem akan menganalisis dan mengkonversi ke format pembelajaran verbal, visual, dan teks yang terstruktur."
+            rows="5"
+            class="w-full px-4 py-3 rounded-lg border border-indigo-500/30 text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          ></textarea>
+          <p class="text-xs text-slate-400 mt-1">💡 Tips: Semakin detail materi yang Anda berikan, semakin baik hasil konversi.</p>
+        </div>
+
+        <!-- Video Link (Optional) -->
+        <div>
+          <label for="videoLink" class="block text-sm font-medium text-slate-100 mb-2">
+            Link Video Pembelajaran (Opsional)
+          </label>
+          <input
+            id="videoLink"
+            type="url"
+            placeholder="https://example.com/video-pembelajaran"
+            class="w-full px-4 py-3 rounded-lg border border-indigo-500/30 text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+          <p class="text-xs text-slate-400 mt-1">Video akan direferensikan dalam rekomendasi pembelajaran.</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-3 pt-2">
+          <button
+            id="convertBtn"
+            class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+          >
+            🚀 Konversi Materi
+          </button>
+          <button
+            id="resetBtn"
+            class="px-6 py-3 bg-slate-700/50 text-slate-200 font-medium rounded-lg hover:bg-slate-600/50 transition-all duration-200"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="hidden mb-8">
+      <div class="card glow rounded-xl p-8 border text-center">
+        <div class="flex justify-center mb-4">
+          <svg class="conversion-spinner w-8 h-8 text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
+        <p class="text-slate-300 font-medium">Menganalisis materi dan mengonversi ke format pembelajaran...</p>
+      </div>
+    </div>
+
+    <!-- Results Section (Hidden initially) -->
+    <section id="resultsSection" class="hidden space-y-6">
+      <!-- Section Header -->
+      <div class="card glow rounded-xl p-6 border">
+        <h2 class="text-2xl font-semibold text-slate-100">Hasil Konversi Materi</h2>
+        <p class="text-slate-400 mt-2">Materi Anda telah dikonversi ke 3 metode pembelajaran yang berbeda. Pilih metode yang paling sesuai dengan gaya belajar siswa Anda.</p>
+      </div>
+
+      <!-- Three Learning Methods -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Verbal Learning -->
+        <article class="card glow rounded-xl p-6 border learning-card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-2xl">🎤</div>
+            <h3 class="text-lg font-semibold text-slate-100">Pembelajaran Verbal</h3>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Narasi seolah guru menjelaskan secara lisan dengan cara yang mudah dipahami.</p>
+          
+          <div class="bg-slate-800/50 rounded-lg p-4 border border-indigo-500/10 min-h-[280px]">
+            <div id="verbalContent" class="text-sm text-slate-300 leading-relaxed space-y-3">
+              <p class="text-slate-400 italic">Klik "Konversi Materi" untuk melihat hasil...</p>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-indigo-500/10">
+            <p class="text-xs text-slate-400">
+              <span class="font-medium text-indigo-400">💡 Cocok untuk:</span> Siswa yang lebih memahami penjelasan lisan dan diskusi interaktif
+            </p>
+          </div>
+        </article>
+
+        <!-- Visual Learning -->
+        <article class="card glow rounded-xl p-6 border learning-card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-2xl">📊</div>
+            <h3 class="text-lg font-semibold text-slate-100">Pembelajaran Visual</h3>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Ringkasan visual dengan diagram, poin-poin utama, dan alur pembelajaran yang jelas.</p>
+          
+          <div class="bg-slate-800/50 rounded-lg p-4 border border-indigo-500/10 min-h-[280px]">
+            <div id="visualContent" class="text-sm text-slate-300 space-y-3">
+              <p class="text-slate-400 italic">Klik "Konversi Materi" untuk melihat hasil...</p>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-indigo-500/10">
+            <p class="text-xs text-slate-400">
+              <span class="font-medium text-purple-400">💡 Cocok untuk:</span> Siswa yang lebih baik belajar melalui gambar, diagram, dan representasi visual
+            </p>
+          </div>
+        </article>
+
+        <!-- Text Learning -->
+        <article class="card glow rounded-xl p-6 border learning-card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-2xl">📝</div>
+            <h3 class="text-lg font-semibold text-slate-100">Pembelajaran Teks</h3>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Materi terstruktur dalam format teks dengan paragraf singkat dan poin-poin penting.</p>
+          
+          <div class="bg-slate-800/50 rounded-lg p-4 border border-indigo-500/10 min-h-[280px]">
+            <div id="textContent" class="text-sm text-slate-300 space-y-3">
+              <p class="text-slate-400 italic">Klik "Konversi Materi" untuk melihat hasil...</p>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-indigo-500/10">
+            <p class="text-xs text-slate-400">
+              <span class="font-medium text-emerald-400">💡 Cocok untuk:</span> Siswa yang lebih suka membaca dan mempelajari materi dalam bentuk teks terstruktur
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Download Section -->
+      <div class="card glow rounded-xl p-6 border mt-8">
+        <h3 class="text-lg font-semibold text-slate-100 mb-4">Opsi Lanjutan</h3>
+        <div class="flex flex-wrap gap-3">
+          <button id="downloadBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm">
+            📥 Download Semua Format
+          </button>
+          <button id="copyBtn" class="px-4 py-2 bg-slate-700/50 text-slate-200 rounded-lg hover:bg-slate-600/50 transition text-sm">
+            📋 Salin Ke Clipboard
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="card glow rounded-xl p-12 border text-center">
+      <div class="text-4xl mb-4">✍️</div>
+      <h3 class="text-xl font-semibold text-slate-100 mb-2">Mulai Konversi Materi Anda</h3>
+      <p class="text-slate-400">Masukkan materi pembelajaran di atas dan klik tombol "Konversi Materi" untuk melihat hasil otomatis ke 3 format pembelajaran.</p>
+    </div>
+  </main>
+
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-slate-400 mt-12">
+    <div>Demo Platform — Konversi materi menggunakan simulasi AI. Dirancang untuk membantu guru mengadaptasi konten pembelajaran ke berbagai gaya belajar siswa.</div>
+  </footer>
+
+  <script>
+    // Helper function: Extract key points from text
+    function extractKeyPoints(text) {
+      const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+      return sentences.slice(0, 5).map(s => s.trim());
+    }
+
+    // Helper function: Create verbal narration
+    function createVerbalNarration(text) {
+      const keyPoints = extractKeyPoints(text);
+      const intro = "Halo teman-teman! Mari kita pelajari materi berikut dengan santai dan mudah dipahami.";
+      const points = keyPoints.map((point, i) => 
+        `<p><strong>${i + 1}. ${point}</strong></p>`
+      ).join('');
+      const outro = "<p>Nah, itu tadi penjelasan singkat. Apakah ada yang ingin ditanyakan?</p>";
+      return `${intro}<br/><br/>${points}<br/><br/>${outro}`;
+    }
+
+    // Helper function: Create visual summary
+    function createVisualSummary(text, videoLink) {
+      const keyPoints = extractKeyPoints(text);
+      const videoSection = videoLink ? `<div class="mb-4"><strong>📹 Referensi Video:</strong> ${videoLink}</div>` : '';
+      const diagram = `
+        <div class="mb-4 p-3 bg-slate-700/50 rounded border border-indigo-500/20 text-center">
+          <p class="text-xs text-slate-400">📊 Diagram Alur Pembelajaran</p>
+          <p class="text-slate-300 mt-2">Visualisasi konsep utama ditampilkan di sini</p>
+        </div>
+      `;
+      const bullets = keyPoints.map(point => 
+        `<div class="flex gap-2"><span class="text-indigo-400">▸</span><span>${point}</span></div>`
+      ).join('');
+      return `${videoSection}${diagram}<div class="space-y-2">${bullets}</div>`;
+    }
+
+    // Helper function: Create structured text
+    function createStructuredText(text) {
+      const keyPoints = extractKeyPoints(text);
+      const sections = keyPoints.map((point, i) => `
+        <div>
+          <h4 class="font-semibold text-emerald-400">Bagian ${i + 1}:</h4>
+          <p class="text-slate-300 mt-1">${point}</p>
+        </div>
+      `).join('');
+      return `
+        <div class="space-y-3">
+          ${sections}
+          <div class="mt-4 pt-4 border-t border-indigo-500/10">
+            <p class="text-xs text-slate-400"><strong>📌 Poin Penting:</strong> Pastikan siswa memahami setiap konsep sebelum melanjutkan ke bagian berikutnya.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Convert button handler
+    document.getElementById('convertBtn').addEventListener('click', function() {
+      const material = document.getElementById('materialInput').value.trim();
+      const videoLink = document.getElementById('videoLink').value.trim();
+
+      if (!material) {
+        alert('Mohon masukkan materi pembelajaran terlebih dahulu.');
+        return;
+      }
+
+      // Show loading state
+      document.getElementById('loadingState').classList.remove('hidden');
+      document.getElementById('resultsSection').classList.add('hidden');
+      document.getElementById('emptyState').classList.add('hidden');
+
+      // Simulate AI processing with delay
+      setTimeout(() => {
+        // Generate content
+        const verbalContent = createVerbalNarration(material);
+        const visualContent = createVisualSummary(material, videoLink);
+        const textContent = createStructuredText(material);
+
+        // Update UI
+        document.getElementById('verbalContent').innerHTML = verbalContent;
+        document.getElementById('visualContent').innerHTML = visualContent;
+        document.getElementById('textContent').innerHTML = textContent;
+
+        // Show results
+        document.getElementById('loadingState').classList.add('hidden');
+        document.getElementById('resultsSection').classList.remove('hidden');
+        document.getElementById('emptyState').classList.add('hidden');
+
+        // Scroll to results
+        setTimeout(() => {
+          document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }, 1500); // Simulate processing time
+    });
+
+    // Reset button handler
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      document.getElementById('materialInput').value = '';
+      document.getElementById('videoLink').value = '';
+      document.getElementById('resultsSection').classList.add('hidden');
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('emptyState').classList.remove('hidden');
+    });
+
+    // Download handler
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      const verbal = document.getElementById('verbalContent').innerText;
+      const visual = document.getElementById('visualContent').innerText;
+      const text = document.getElementById('textContent').innerText;
+      
+      const content = `HASIL KONVERSI MATERI PEMBELAJARAN\n\n${'='.repeat(50)}\n\nPEMBELAJARAN VERBAL:\n\n${verbal}\n\n${'='.repeat(50)}\n\nPEMBELAJARAN VISUAL:\n\n${visual}\n\n${'='.repeat(50)}\n\nPEMBELAJARAN TEKS:\n\n${text}`;
+      
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'konten-pembelajaran.txt';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    });
+
+    // Copy handler
+    document.getElementById('copyBtn').addEventListener('click', function() {
+      const verbal = document.getElementById('verbalContent').innerText;
+      const visual = document.getElementById('visualContent').innerText;
+      const text = document.getElementById('textContent').innerText;
+      
+      const content = `PEMBELAJARAN VERBAL:\n${verbal}\n\nPEMBELAJARAN VISUAL:\n${visual}\n\nPEMBELAJARAN TEKS:\n${text}`;
+      
+      navigator.clipboard.writeText(content).then(() => {
+        alert('Konten berhasil disalin ke clipboard!');
+      });
+    });
+  </script>
+</body>
+</html>
