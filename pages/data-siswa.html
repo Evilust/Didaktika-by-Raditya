@@ -53,6 +53,8 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
@@ -69,8 +71,8 @@
       <!-- Logo & Dashboard Title -->
       <div class="flex items-center gap-6">
         <a href="index.html" class="flex items-center gap-2 group">
-            <div class="w-8 h-8 bg-gradient-to-tr from-cyan-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all">
-                <span class="font-bold text-white text-lg">D</span>
+            <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center shadow-lg  group-hover:shadow-cyan-500/40 transition-all">
+               <img src="../assets/img/logo edutech.png">
             </div>
             <span class="text-xl font-bold text-slate-100 tracking-tight hidden sm:block">Didaktika<span class="text-cyan-400">AI</span></span>
         </a>
@@ -79,7 +81,7 @@
             <span class="bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide">
                 Dashboard Guru
             </span>
-            <span class="text-sm text-slate-400 hidden md:block">Data Kelas IX-A</span>
+            <span class="text-sm text-slate-400 hidden md:block">Data Kelas X RPL 1</span>
         </div>
       </div>
 
@@ -107,13 +109,13 @@
             <p class="text-slate-400">Pantau perkembangan siswa dan efektivitas adaptasi AI secara real-time.</p>
         </div>
         <div class="flex gap-3">
-            <button class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+            <button onclick="exportPDF()" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm font-medium transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 Ekspor Laporan
             </button>
-            <a href="#" class="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-cyan-500/20">
+            <a href="Halaman pembelajaran.html" class="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-cyan-500/20">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                Analisis AI Terbaru
+                Materi Pembelajaran
             </a>
         </div>
     </div>
@@ -200,14 +202,15 @@
             </div>
             <div class="flex gap-2">
                 <!-- Search/Filter Placeholder -->
-                <div class="relative hidden sm:block">
-                    <input type="text" placeholder="Cari siswa..." class="bg-slate-950 border border-slate-700 text-sm rounded-lg px-4 py-2 text-slate-300 focus:outline-none focus:border-cyan-500 w-48 transition-colors">
+                <div>
+                  <h2 class="text-lg font-bold text-white mr-16">KELAS X RPL 1</h2>
+
                 </div>
             </div>
           </div>
 
           <!-- Table Container -->
-          <div class="overflow-x-auto custom-scrollbar">
+          <div id="laporan-pdf" class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left border-collapse">
               <thead class="bg-slate-950/50 text-slate-400 text-xs uppercase tracking-wider font-semibold border-b border-slate-800">
                 <tr>
@@ -228,7 +231,7 @@
                           AM
                       </div>
                       <div>
-                        <div class="font-medium text-white group-hover:text-cyan-400 transition-colors">Alex Morgan</div>
+                        <a href="dashboard guru.html" class="font-medium text-blue-300 group-hover:text-cyan-400 transition-colors">Alex Morgan</a>
                         <div class="text-xs text-slate-500">Online 2 jam lalu</div>
                       </div>
                     </div>
@@ -265,7 +268,7 @@
                           AP
                       </div>
                       <div>
-                        <div class="font-medium text-white group-hover:text-cyan-400 transition-colors">Aisha Patel</div>
+                        <div class="font-medium text-blue-300 group-hover:text-cyan-400 transition-colors">Aisha Patel</div>
                         <div class="text-xs text-slate-500">Online kemarin</div>
                       </div>
                     </div>
@@ -302,7 +305,7 @@
                           JG
                       </div>
                       <div>
-                        <div class="font-medium text-white group-hover:text-cyan-400 transition-colors">Javier Gómez</div>
+                        <div class="font-medium text-blue-300 group-hover:text-cyan-400 transition-colors">Javier Gómez</div>
                         <div class="text-xs text-slate-500">Online 3 hari lalu</div>
                       </div>
                     </div>
@@ -325,7 +328,7 @@
                         <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
                         <span class="text-slate-300">Verbal</span>
                     </div>
-                    <div class="mt-1 text-[10px] text-sky-400 bg-sky-900/30 inline-block px-1.5 rounded">Bahasa Isyarat Aktif</div>
+                    
                   </td>
                   <td class="px-6 py-4 text-slate-400">
                     Kesulitan konsep abstrak, coba analogi.
@@ -340,7 +343,7 @@
                           HL
                       </div>
                       <div>
-                        <div class="font-medium text-white group-hover:text-cyan-400 transition-colors">Hannah Lee</div>
+                        <div class="font-medium text-blue-300 group-hover:text-cyan-400 transition-colors">Hannah Lee</div>
                         <div class="text-xs text-slate-500">Online hari ini</div>
                       </div>
                     </div>
@@ -374,7 +377,7 @@
                           OL
                       </div>
                       <div>
-                        <div class="font-medium text-white group-hover:text-cyan-400 transition-colors">Oluwaseun</div>
+                        <div class="font-medium text-blue-300 group-hover:text-cyan-400 transition-colors">Oluwaseun</div>
                         <div class="text-xs text-slate-500">Online 2 hari lalu</div>
                       </div>
                     </div>
@@ -411,7 +414,7 @@
                           YT
                       </div>
                       <div>
-                        <div class="font-medium text-white group-hover:text-cyan-400 transition-colors">Yuki Tanaka</div>
+                        <div class="font-medium text-blue-300 group-hover:text-cyan-400 transition-colors">Yuki Tanaka</div>
                         <div class="text-xs text-slate-500">Online 4 hari lalu</div>
                       </div>
                     </div>
@@ -434,7 +437,7 @@
                         <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         <span class="text-slate-300">Visual</span>
                     </div>
-                    <div class="mt-1 text-[10px] text-sky-400 bg-sky-900/30 inline-block px-1.5 rounded">Bahasa Isyarat Aktif</div>
+                    
                   </td>
                   <td class="px-6 py-4 text-slate-400">
                     Sederhanakan visual, kurangi teks.
@@ -449,7 +452,7 @@
                           MK
                       </div>
                       <div>
-                        <div class="font-medium text-white group-hover:text-cyan-400 transition-colors">Marta Kowalski</div>
+                        <div class="font-medium text-blue-300 group-hover:text-cyan-400 transition-colors">Marta Kowalski</div>
                         <div class="text-xs text-slate-500">Online kemarin</div>
                       </div>
                     </div>
@@ -506,5 +509,21 @@
       easing: 'ease-out-cubic',
     });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    function exportPDF() {
+      const element = document.getElementById("laporan-pdf");
+    
+      const opt = {
+        margin:       0.5,
+        filename:     'Laporan_Kelas_IX-A.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+    
+      html2pdf().set(opt).from(element).save();
+    }
+    </script>
 </body>
 </html>
