@@ -1,251 +1,250 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ketentuan Penggunaan - Didaktika AI</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 25%, #312e81 50%, #4c1d95 75%, #2e1065 100%);
-      background-attachment: fixed;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ketentuan Penggunaan - Didaktika AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030712; /* Gray 950 */
+            color: #F9FAFB;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15); /* Indigo Shadow */
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%); /* Indigo to Purple */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animations */
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        .animate-pulse-glow { animation: pulse-glow 6s ease-in-out infinite; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: { 450: '#6366f1' },
+                        purple: { 450: '#a855f7' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="text-slate-100 antialiased">
-  <!-- Header -->
-  <header class="sticky top-0 bg-slate-900/60 backdrop-blur z-10 border-b border-indigo-500/20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <div class="flex items-center gap-3">
-        <div class="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <h1 class="text-xl font-semibold text-slate-100">Ketentuan Penggunaan</h1>
-      </div>
-    </div>
-  </header>
+<body class="antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
 
-  <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <!-- Intro -->
-    <section class="mb-12">
-      <p class="text-slate-300 text-lg leading-relaxed">
-        Selamat datang di platform Didaktika AI. Halaman ini menjelaskan bagaimana platform ini dirancang untuk mendukung pekerjaan Anda sebagai pendidik. Kami berkomitmen untuk transparansi mengenai peran, batasan, dan tanggung jawab yang terlibat dalam penggunaan alat ini.
-      </p>
-    </section>
-
-    <!-- Sections -->
-    <div class="space-y-10">
-      <!-- Section 1 -->
-      <section class="bg-slate-900/60 backdrop-blur rounded-xl p-8 border border-indigo-500/20">
-        <h2 class="text-2xl font-bold text-slate-100 mb-4">1. Platform Sebagai Alat Bantu Pendidik</h2>
-        <div class="space-y-4">
-          <p class="text-slate-300 leading-relaxed">
-            Didaktika AI dirancang sebagai <span class="text-indigo-400 font-semibold">alat bantu untuk memperkaya proses pembelajaran</span>, bukan sebagai pengganti peran pendidik. Platform ini tidak dimaksudkan untuk mengambil alih tugas-tugas inti guru, seperti:
-          </p>
-          <ul class="space-y-3 ml-6">
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Mengambil keputusan pedagogis yang bersifat final</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Mengevaluasi karakter dan potensi siswa secara holistik</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Membangun hubungan emosional dan kepercayaan dengan siswa</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Memberikan bimbingan holistik yang mempertimbangkan konteks sosial dan keluarga</span>
-            </li>
-          </ul>
-          <p class="text-slate-300 leading-relaxed pt-4">
-            Sebagai pendidik profesional, <span class="text-indigo-400 font-semibold">Anda memiliki kewenangan penuh</span> untuk mengevaluasi, memodifikasi, atau menolak rekomendasi yang diberikan oleh platform ini.
-          </p>
-        </div>
-      </section>
-
-      <!-- Section 2 -->
-      <section class="bg-slate-900/60 backdrop-blur rounded-xl p-8 border border-indigo-500/20">
-        <h2 class="text-2xl font-bold text-slate-100 mb-4">2. Rekomendasi AI Bersifat Sugestif</h2>
-        <div class="space-y-4">
-          <p class="text-slate-300 leading-relaxed">
-            Semua rekomendasi yang diberikan oleh sistem AI Didaktika adalah <span class="text-indigo-400 font-semibold">saran yang bersifat sugestif, bukan perintah</span>. Analisis yang dihasilkan didasarkan pada pola data dan model pembelajaran umum, tetapi setiap siswa memiliki keunikan yang mungkin tidak sepenuhnya tertangkap oleh algoritma.
-          </p>
-          <p class="text-slate-300 leading-relaxed">
-            <span class="text-amber-400 font-semibold">Keputusan akhir selalu ada di tangan Anda sebagai pendidik.</span> Anda dapat menggunakan rekomendasi ini sebagai titik awal untuk refleksi dan perencanaan pembelajaran, tetapi pengalaman langsung Anda dengan siswa tetap menjadi pertimbangan utama.
-          </p>
-        </div>
-      </section>
-
-      <!-- Section 3 -->
-      <section class="bg-slate-900/60 backdrop-blur rounded-xl p-8 border border-indigo-500/20">
-        <h2 class="text-2xl font-bold text-slate-100 mb-4">3. Tanggung Jawab Materi yang Diinput</h2>
-        <div class="space-y-4">
-          <p class="text-slate-300 leading-relaxed">
-            Sebagai pengguna platform, Anda bertanggung jawab penuh atas:
-          </p>
-          <ul class="space-y-3 ml-6">
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Keakuratan dan kualitas materi pembelajaran yang diunggah atau diinputkan</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Memastikan konten sesuai dengan kurikulum dan standar pendidikan yang berlaku</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Kepatuhan terhadap regulasi privasi dan perlindungan data siswa</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Tidak menginputkan konten yang bersifat diskriminatif, berbahaya, atau melanggar hak asasi</span>
-            </li>
-          </ul>
-          <p class="text-slate-300 leading-relaxed pt-4">
-            Didaktika AI tidak bertanggung jawab atas kesalahan, ketidakakuratan, atau dampak negatif yang timbul dari materi yang Anda inputkan ke dalam platform.
-          </p>
-        </div>
-      </section>
-
-      <!-- Section 4 -->
-      <section class="bg-slate-900/60 backdrop-blur rounded-xl p-8 border border-indigo-500/20">
-        <h2 class="text-2xl font-bold text-slate-100 mb-4">4. Jaminan Hasil Pembelajaran</h2>
-        <div class="space-y-4">
-          <p class="text-slate-300 leading-relaxed">
-            Platform Didaktika AI <span class="text-rose-400 font-semibold">tidak menjamin hasil pembelajaran secara mutlak</span>. Pembelajaran adalah proses kompleks yang dipengaruhi oleh banyak faktor, antara lain:
-          </p>
-          <ul class="space-y-3 ml-6">
-            <li class="flex items-start gap-3">
-              <span class="text-slate-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Motivasi dan komitmen siswa</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-slate-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Latar belakang pendidikan dan pengalaman sebelumnya</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-slate-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Lingkungan belajar dan dukungan keluarga</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-slate-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Kualitas implementasi strategi pembelajaran di kelas</span>
-            </li>
-          </ul>
-          <p class="text-slate-300 leading-relaxed pt-4">
-            Penggunaan platform ini adalah langkah untuk memperkaya pembelajaran, namun kesuksesan siswa tetap bergantung pada kerja sama yang kuat antara guru, siswa, dan ekosistem pendidikan secara keseluruhan.
-          </p>
-        </div>
-      </section>
-
-      <!-- Section 5 -->
-      <section class="bg-slate-900/60 backdrop-blur rounded-xl p-8 border border-indigo-500/20">
-        <h2 class="text-2xl font-bold text-slate-100 mb-4">5. Status Demo dan Simulasi AI</h2>
-        <div class="space-y-4">
-          <p class="text-slate-300 leading-relaxed">
-            Fitur-fitur AI yang ditampilkan dalam platform ini <span class="text-indigo-400 font-semibold">bersifat demo dan simulasi</span> untuk keperluan pengembangan, penelitian, dan edukasi. Ini berarti:
-          </p>
-          <ul class="space-y-3 ml-6">
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Data yang ditampilkan adalah data sintetis yang dibuat untuk tujuan demonstrasi</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Hasil AI mungkin tidak mencerminkan skenario nyata dengan tingkat akurasi yang sama</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Fitur dapat berubah, berkembang, atau diperbaharui sewaktu-waktu</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">•</span>
-              <span class="text-slate-300">Platform ini bukan versi produksi final, melainkan prototype atau beta</span>
-            </li>
-          </ul>
-          <p class="text-slate-300 leading-relaxed pt-4">
-            Kami mengundang Anda untuk memberikan umpan balik konstruktif untuk membantu kami meningkatkan kualitas platform.
-          </p>
-        </div>
-      </section>
-
-      <!-- Section 6 -->
-      <section class="bg-slate-900/60 backdrop-blur rounded-xl p-8 border border-indigo-500/20">
-        <h2 class="text-2xl font-bold text-slate-100 mb-4">6. Komitmen Kami</h2>
-        <div class="space-y-4">
-          <p class="text-slate-300 leading-relaxed">
-            Didaktika AI berkomitmen untuk:
-          </p>
-          <ul class="space-y-3 ml-6">
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">✓</span>
-              <span class="text-slate-300">Terus mengembangkan dan meningkatkan akurasi fitur AI seiring waktu</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">✓</span>
-              <span class="text-slate-300">Menjaga keamanan dan privasi data pengguna dan siswa</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">✓</span>
-              <span class="text-slate-300">Memberikan transparansi tentang keterbatasan dan batasan AI</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-emerald-400 font-bold mt-1">✓</span>
-              <span class="text-slate-300">Mendengarkan umpan balik pendidik untuk perbaikan berkelanjutan</span>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Final Section -->
-      <section class="bg-gradient-to-r from-indigo-900/40 to-purple-900/40 backdrop-blur rounded-xl p-8 border border-indigo-500/30">
-        <h2 class="text-2xl font-bold text-slate-100 mb-4">Persetujuan</h2>
-        <p class="text-slate-300 leading-relaxed mb-6">
-          Dengan mengakses dan menggunakan platform Didaktika AI, Anda mengakui bahwa:
-        </p>
-        <ul class="space-y-3">
-          <li class="flex items-start gap-3">
-            <span class="text-indigo-400 font-bold text-xl">→</span>
-            <span class="text-slate-100">Anda telah membaca dan memahami ketentuan penggunaan ini</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-indigo-400 font-bold text-xl">→</span>
-            <span class="text-slate-100">Anda setuju bahwa platform ini adalah alat bantu, bukan pengganti pendidik</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-indigo-400 font-bold text-xl">→</span>
-            <span class="text-slate-100">Anda bertanggung jawab atas keputusan pedagogis yang Anda ambil</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-indigo-400 font-bold text-xl">→</span>
-            <span class="text-slate-100">Anda akan menggunakan platform ini secara etis dan bertanggung jawab</span>
-          </li>
-        </ul>
-        <p class="text-slate-300 leading-relaxed mt-6 pt-6 border-t border-indigo-500/20">
-          Terima kasih telah menjadi bagian dari komunitas pendidik yang memanfaatkan teknologi untuk meningkatkan pengalaman belajar siswa.
-        </p>
-      </section>
+    <!-- Background Elements (Glows & Noise) -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 right-1/4 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow" style="animation-delay: 3s;"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
     </div>
 
-    <!-- Last Updated -->
-    <div class="mt-12 pt-8 border-t border-indigo-500/20 text-center">
-      <p class="text-slate-400 text-sm">
-        Ketentuan Penggunaan ini berlaku efektif sejak Januari 2026 dan dapat diperbarui sewaktu-waktu.
-      </p>
-    </div>
-  </main>
+    <!-- Navigation (Simulated) -->
+    <nav class="fixed w-full z-50 top-0 left-0 border-b border-white/5 bg-[#030712]/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    </div>
+                    <span class="font-bold text-lg tracking-tight">Didaktika <span class="font-light opacity-80">Terms</span></span>
+                </div>
+                <div class="text-sm text-gray-400">v2.0 • 2026</div>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Footer -->
-  <footer class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-    <p class="text-slate-400 text-sm">
-      © 2026 Didaktika AI. Platform pembelajaran berbasis AI untuk pendidik.
-    </p>
-  </footer>
+    <div class="relative z-10 container mx-auto px-4 py-24 md:py-32 max-w-6xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-20 animate-fade-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-xs font-semibold tracking-wider uppercase mb-6 backdrop-blur-sm">
+                <i data-lucide="scale" class="w-3 h-3"></i>
+                Pedoman & Etika
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
+                Ketentuan <span class="text-gradient">Penggunaan</span>
+            </h1>
+            
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Transparansi adalah kunci kolaborasi. Halaman ini menjelaskan peran kami sebagai penyedia teknologi dan peran Anda sebagai pendidik dalam ekosistem Didaktika AI.
+            </p>
+        </header>
+
+        <!-- Terms Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+
+            <!-- Term 1: Alat Bantu -->
+            <div class="glass-card rounded-3xl p-8 group hover:border-indigo-500/30 animate-fade-up delay-100">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="wrench" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Alat Bantu Pendidik</h3>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                    Didaktika AI adalah <span class="text-indigo-400 font-semibold">co-pilot</span>, bukan pilot. Platform ini tidak menggantikan peran pedagogis, evaluasi karakter, atau hubungan emosional dengan siswa.
+                </p>
+                <div class="pl-4 border-l-2 border-indigo-500/20">
+                    <p class="text-xs text-gray-500">Anda memiliki kewenangan penuh untuk memodifikasi atau menolak saran sistem.</p>
+                </div>
+            </div>
+
+            <!-- Term 2: Rekomendasi (Warning style for emphasis) -->
+            <div class="glass-card rounded-3xl p-8 group hover:border-amber-500/30 animate-fade-up delay-100">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Sifat Rekomendasi</h3>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                    Analisis AI bersifat <span class="text-amber-400 font-semibold">sugestif</span> berdasarkan pola data. Algoritma mungkin tidak menangkap nuansa unik setiap siswa.
+                </p>
+                <div class="pl-4 border-l-2 border-amber-500/20">
+                    <p class="text-xs text-gray-500">Gunakan sebagai referensi awal, bukan keputusan mutlak. Intuisi guru tetap yang utama.</p>
+                </div>
+            </div>
+
+            <!-- Term 3: Tanggung Jawab Konten -->
+            <div class="glass-card rounded-3xl p-8 group hover:border-rose-500/30 animate-fade-up delay-200">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="file-warning" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Validitas Konten</h3>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                    Anda bertanggung jawab atas keakuratan materi yang diinput. Pastikan konten tidak melanggar hak cipta, etika, atau mengandung unsur berbahaya.
+                </p>
+                <div class="pl-4 border-l-2 border-rose-500/20">
+                    <p class="text-xs text-gray-500">Platform tidak memoderasi kebenaran akademik dari materi yang Anda unggah secara otomatis.</p>
+                </div>
+            </div>
+
+            <!-- Term 4: Hasil Pembelajaran -->
+            <div class="glass-card rounded-3xl p-8 group hover:border-emerald-500/30 animate-fade-up delay-200">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="trending-up" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Hasil Pembelajaran</h3>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                    Kami menyediakan alat terbaik, namun hasil belajar siswa dipengaruhi oleh motivasi, lingkungan, dan faktor eksternal lainnya.
+                </p>
+                <div class="pl-4 border-l-2 border-emerald-500/20">
+                    <p class="text-xs text-gray-500">Tidak ada jaminan peningkatan nilai instan tanpa kolaborasi antara guru, siswa, dan sistem.</p>
+                </div>
+            </div>
+
+            <!-- Term 5: Demo Status (Full Width) -->
+            <div class="glass-card rounded-3xl p-8 md:col-span-2 group hover:border-cyan-500/30 animate-fade-up delay-300">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 group-hover:rotate-12 transition-transform duration-500">
+                        <i data-lucide="flask-conical" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Lingkungan Demo & Simulasi</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                            Fitur yang Anda gunakan saat ini berstatus <span class="text-cyan-400 font-semibold">Demo / Beta</span>. Data yang ditampilkan mungkin berupa data sintetis untuk tujuan demonstrasi.
+                        </p>
+                        <p class="text-xs text-gray-500">
+                            Fitur dapat berkembang atau berubah sewaktu-waktu. Kami sangat menghargai umpan balik Anda untuk penyempurnaan sistem.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Agreement Section -->
+        <div class="glass-card rounded-3xl p-8 md:p-12 border-t-4 border-t-indigo-500 bg-gradient-to-b from-indigo-900/20 to-transparent animate-fade-up delay-300">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Persetujuan Pengguna</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">
+                    Dengan mengakses platform ini, Anda menyatakan pemahaman dan persetujuan atas poin-poin berikut:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-indigo-400 mt-0.5 shrink-0"></i>
+                    <span class="text-sm text-gray-300">Saya mengerti platform ini adalah alat bantu, bukan pengganti guru.</span>
+                </div>
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-indigo-400 mt-0.5 shrink-0"></i>
+                    <span class="text-sm text-gray-300">Saya bertanggung jawab atas keputusan pedagogis yang diambil.</span>
+                </div>
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-indigo-400 mt-0.5 shrink-0"></i>
+                    <span class="text-sm text-gray-300">Saya akan menggunakan platform secara etis dan bertanggung jawab.</span>
+                </div>
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-indigo-400 mt-0.5 shrink-0"></i>
+                    <span class="text-sm text-gray-300">Saya telah membaca Kebijakan Privasi yang berlaku.</span>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center pt-8 border-t border-white/10">
+                <p class="text-gray-400 text-xs">
+                    Terakhir diperbarui: <span class="text-indigo-300">Januari 2026</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-20 pt-8 border-t border-white/5 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; 2026 Didaktika AI. Bersama memajukan ekosistem pendidikan.
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

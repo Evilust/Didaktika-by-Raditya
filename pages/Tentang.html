@@ -1,303 +1,271 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Didaktika AI</title>
+    <title>Tentang Kami - Didaktika AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
         body {
-            background: linear-gradient(135deg, #0f1629 0%, #1a2847 50%, #141d2f 100%);
-            color: #e5e7eb;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030712; /* Gray 950 */
+            color: #F9FAFB;
+            overflow-x: hidden;
         }
 
-        /* Animated gradient background elements */
-        .gradient-blob-1 {
-            position: fixed;
-            top: -10%;
-            right: -5%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .gradient-blob-2 {
-            position: fixed;
-            bottom: 10%;
-            left: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15); /* Violet Shadow */
         }
 
-        .content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%); /* Violet to Sky */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .section-subtitle {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #c7d2fe;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        /* Animations */
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
+        .animate-pulse-glow { animation: pulse-glow 6s ease-in-out infinite; }
 
-        .card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            border-radius: 1rem;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .card:hover {
-            border-color: rgba(148, 163, 184, 0.3);
-            background: rgba(30, 41, 59, 0.8);
-            transform: translateY(-4px);
-        }
-
-        .mission-list {
-            list-style: none;
-        }
-
-        .mission-list li {
-            padding: 0.75rem 0;
-            padding-left: 2rem;
-            position: relative;
-            font-size: 1.0625rem;
-            line-height: 1.6;
-        }
-
-        .mission-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #a78bfa;
-            font-weight: bold;
-            font-size: 1.25rem;
-        }
-
-        .value-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .value-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
-            border: 1px solid rgba(167, 139, 250, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .value-card:hover {
-            border-color: rgba(167, 139, 250, 0.4);
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
-            transform: translateY(-4px);
-        }
-
-        .value-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #a78bfa;
-        }
-
-        .value-card p {
-            color: #cbd5e1;
-            line-height: 1.6;
-            font-size: 1.0625rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 0.875rem 2rem;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            color: white;
-            border: none;
-            border-radius: 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-        }
-
-        .cta-button-secondary {
-            display: inline-block;
-            padding: 0.875rem 2rem;
-            background: transparent;
-            color: white;
-            border: 1.5px solid rgba(167, 139, 250, 0.5);
-            border-radius: 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-button-secondary:hover {
-            border-color: rgba(167, 139, 250, 1);
-            background: rgba(167, 139, 250, 0.1);
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 1.75rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .value-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
+        .animate-fade-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: { 450: '#8b5cf6' },
+                        sky: { 450: '#38bdf8' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <div class="gradient-blob-1"></div>
-    <div class="gradient-blob-2"></div>
+<body class="antialiased selection:bg-violet-500/30 selection:text-violet-200">
 
-    <div class="content">
-        <!-- Navigation -->
-        <nav class="px-4 sm:px-6 lg:px-8 py-6 border-b border-slate-700/30">
-            <div class="max-w-6xl mx-auto flex items-center justify-between">
-                <div class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                    Didaktika AI
+    <!-- Background Elements (Glows & Noise) -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/3 w-[800px] h-[800px] bg-violet-600/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow" style="animation-delay: 2s;"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+    </div>
+
+    <!-- Navigation (Simulated) -->
+    <nav class="fixed w-full z-50 top-0 left-0 border-b border-white/5 bg-[#030712]/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-sky-500 flex items-center justify-center text-white">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </div>
+                    <span class="font-bold text-lg tracking-tight">Didaktika <span class="font-light opacity-80">AI</span></span>
                 </div>
-                <div class="hidden sm:flex gap-8 text-sm">
-                    <a href="#" class="text-slate-300 hover:text-white transition">Beranda</a>
-                    <a href="#" class="text-slate-300 hover:text-white transition">Fitur</a>
-                    <a href="#" class="text-slate-300 hover:text-white transition">Tentang</a>
-                    <a href="#" class="text-slate-300 hover:text-white transition">Kontak</a>
+                <div class="hidden sm:flex gap-8 text-sm font-medium text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors">Beranda</a>
+                    <a href="#" class="hover:text-white transition-colors">Fitur</a>
+                    <a href="#" class="text-white">Tentang</a>
+                    <a href="Kontak.html" class="hover:text-white transition-colors">Kontak</a>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
+
+    <div class="relative z-10 container mx-auto px-4 py-24 md:py-32 max-w-6xl">
 
         <!-- Hero Section -->
-        <section class="px-4 sm:px-6 lg:px-8 py-20">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="section-title text-4xl sm:text-5xl mb-6 pb-8">
-                    Tentang Didaktika AI
-                </h1>
-                <p class="text-lg sm:text-xl text-slate-300 leading-relaxed">
-                    Membantu guru mengajar lebih efektif melalui pendekatan pembelajaran yang adaptif.
-                </p>
+        <header class="text-center mb-24 animate-fade-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-violet-300 text-xs font-semibold tracking-wider uppercase mb-6 backdrop-blur-sm">
+                <i data-lucide="rocket" class="w-3 h-3"></i>
+                Cerita Kami
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                Mengenal <span class="text-gradient">Didaktika AI</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Menjembatani kesenjangan antara potensi siswa dan keterbatasan waktu guru melalui teknologi adaptif yang manusiawi.
+            </p>
+        </header>
+
+        <!-- Latar Belakang (Story) -->
+        <section class="mb-24 animate-fade-up delay-100">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border-l-4 border-l-violet-500 relative overflow-hidden">
+                <!-- Decorative Blur -->
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl"></div>
+
+                <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                    <div class="flex-1">
+                        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                            <i data-lucide="book-open-check" class="w-8 h-8 text-violet-400"></i>
+                            Mengapa Kami Ada?
+                        </h2>
+                        <div class="space-y-4 text-gray-300 text-lg leading-relaxed">
+                            <p>
+                                Di setiap kelas, terdapat puluhan siswa dengan gaya belajar yang unik. Namun, guru sering kali terhambat oleh beban administrasi dan keterbatasan waktu untuk merancang materi yang benar-benar personal.
+                            </p>
+                            <p>
+                                <span class="text-white font-semibold">Didaktika AI lahir dari masalah ini.</span> Kami bukan sekadar alat otomatisasi, melainkan mitra berpikir bagi guru untuk menciptakan pengalaman belajar yang inklusif tanpa menambah beban kerja.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Visual Illustration Placeholder -->
+                    <div class="w-full md:w-1/3 flex justify-center">
+                        <div class="w-48 h-48 rounded-full bg-gradient-to-tr from-violet-500/20 to-sky-500/20 border border-white/10 flex items-center justify-center backdrop-blur-md relative">
+                            <i data-lucide="lightbulb" class="w-20 h-20 text-violet-200/80"></i>
+                            <div class="absolute inset-0 rounded-full animate-pulse-glow border border-violet-500/30"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Latar Belakang Section -->
-        <section class="px-4 sm:px-6 lg:px-8 py-16">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="section-subtitle">Latar Belakang</h2>
-                <div class="card">
-                    <p class="text-slate-300 leading-relaxed text-lg">
-                        Setiap siswa memiliki cara belajar yang berbeda. Namun, guru sering dihadapkan pada keterbatasan waktu dan sumber daya untuk menyesuaikan metode pembelajaran. Didaktika AI hadir sebagai solusi untuk membantu guru menyajikan materi secara lebih personal dan efektif.
+        <!-- Visi & Misi Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+            
+            <!-- Visi -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 animate-fade-up delay-200 group">
+                <div class="w-14 h-14 rounded-2xl bg-sky-500/10 flex items-center justify-center mb-6 text-sky-400 group-hover:scale-110 transition-transform duration-300">
+                    <i data-lucide="telescope" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Visi Masa Depan</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Mewujudkan ekosistem pendidikan yang <span class="text-sky-300 font-medium">inklusif dan adaptif</span>, di mana setiap siswa mendapatkan kesempatan belajar sesuai kebutuhan unik mereka, didukung oleh guru yang diberdayakan teknologi.
+                </p>
+            </div>
+
+            <!-- Misi -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 animate-fade-up delay-200 group">
+                <div class="w-14 h-14 rounded-2xl bg-violet-500/10 flex items-center justify-center mb-6 text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                    <i data-lucide="flag" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Misi Kami</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-violet-500 mt-0.5 shrink-0"></i>
+                        <span>Efisiensi penyusunan materi ajar berkualitas tinggi.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-violet-500 mt-0.5 shrink-0"></i>
+                        <span>Personalisasi konten untuk berbagai gaya belajar.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-violet-500 mt-0.5 shrink-0"></i>
+                        <span>Demokratisasi teknologi AI yang mudah digunakan di sekolah.</span>
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+
+        <!-- Core Values -->
+        <section class="mb-24 animate-fade-up delay-300">
+            <h2 class="text-3xl font-bold text-center mb-12 flex items-center justify-center gap-3">
+                <span class="w-8 h-1 bg-gradient-to-r from-transparent to-violet-500 rounded-full"></span>
+                Nilai Inti
+                <span class="w-8 h-1 bg-gradient-to-l from-transparent to-sky-500 rounded-full"></span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Value 1 -->
+                <div class="glass-card rounded-2xl p-8 text-center group hover:bg-white/5 transition-colors">
+                    <div class="w-16 h-16 mx-auto bg-[#0B0F19] rounded-full border border-white/10 flex items-center justify-center mb-6 group-hover:border-violet-500/50 transition-colors">
+                        <i data-lucide="user-check" class="w-8 h-8 text-violet-400"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-3">Berpusat pada Guru</h4>
+                    <p class="text-sm text-gray-400">
+                        AI adalah "Co-pilot". Guru tetap memegang kendali penuh atas navigasi pembelajaran di kelas.
+                    </p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="glass-card rounded-2xl p-8 text-center group hover:bg-white/5 transition-colors">
+                    <div class="w-16 h-16 mx-auto bg-[#0B0F19] rounded-full border border-white/10 flex items-center justify-center mb-6 group-hover:border-sky-500/50 transition-colors">
+                        <i data-lucide="fingerprint" class="w-8 h-8 text-sky-400"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-3">Pembelajaran Personal</h4>
+                    <p class="text-sm text-gray-400">
+                        Setiap individu unik. Kami menolak pendekatan "satu ukuran untuk semua" dalam pendidikan.
+                    </p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="glass-card rounded-2xl p-8 text-center group hover:bg-white/5 transition-colors">
+                    <div class="w-16 h-16 mx-auto bg-[#0B0F19] rounded-full border border-white/10 flex items-center justify-center mb-6 group-hover:border-emerald-500/50 transition-colors">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-emerald-400"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-3">Etika & Tanggung Jawab</h4>
+                    <p class="text-sm text-gray-400">
+                        Keamanan data dan dampak sosial adalah filter utama dalam setiap baris kode yang kami tulis.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Visi Section -->
-        <section class="px-4 sm:px-6 lg:px-8 py-16">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="section-subtitle">Visi</h2>
-                <div class="card">
-                    <p class="text-slate-300 leading-relaxed text-lg">
-                        Mewujudkan pembelajaran yang inklusif, adaptif, dan berpusat pada kebutuhan setiap siswa.
+        <!-- CTA Section -->
+        <section class="max-w-4xl mx-auto text-center pb-20 animate-fade-up delay-300">
+            <div class="glass-card rounded-3xl p-10 md:p-14 bg-gradient-to-b from-white/5 to-transparent border border-white/10 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-sky-500/10 opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Siap Mengubah Cara Mengajar?</h2>
+                    <p class="text-gray-300 mb-8 max-w-xl mx-auto">
+                        Bergabunglah dengan ribuan guru yang telah merasakan kemudahan menyusun materi ajar adaptif bersama Didaktika AI.
                     </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Misi Section -->
-        <section class="px-4 sm:px-6 lg:px-8 py-16">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="section-subtitle">Misi</h2>
-                <div class="card">
-                    <ul class="mission-list">
-                        <li>Membantu guru dalam menyusun materi pembelajaran secara efisien</li>
-                        <li>Mendukung berbagai gaya belajar siswa</li>
-                        <li>Menghadirkan teknologi AI yang mudah digunakan di lingkungan pendidikan</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Nilai Utama Section -->
-        <section class="px-4 sm:px-6 lg:px-8 py-16">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="section-subtitle">Nilai yang Kami Junjung</h2>
-                <div class="value-grid">
-                    <div class="value-card">
-                        <h3>Berpusat pada Guru</h3>
-                        <p>AI sebagai alat bantu, bukan pengganti peran guru. Kami percaya teknologi harus memperkuat, bukan menggantikan keahlian pendidik.</p>
-                    </div>
-                    <div class="value-card">
-                        <h3>Pembelajaran Personal</h3>
-                        <p>Materi disesuaikan dengan karakter dan kebutuhan siswa. Setiap individu adalah unik dan berhak mendapat pendekatan yang personal.</p>
-                    </div>
-                    <div class="value-card">
-                        <h3>Teknologi Bertanggung Jawab</h3>
-                        <p>Mengutamakan etika dan dampak positif dalam pendidikan. Kami berkomitmen untuk menciptakan solusi yang berkelanjutan dan bertanggung jawab.</p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="data-siswa.html" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold px-8 py-3 rounded-full transition-all shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i>
+                            Coba Demo Gratis
+                        </a>
+                        <a href="fitur.html" class="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-full transition-all backdrop-blur-sm">
+                            Lihat Fitur Lengkap
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Penutup Section -->
-        <section class="px-4 sm:px-6 lg:px-8 py-20">
-            <div class="max-w-4xl mx-auto text-center">
-                <p class="text-lg sm:text-xl text-slate-300 leading-relaxed mb-8">
-                    Didaktika AI dikembangkan untuk menjadi mitra guru dalam menciptakan proses belajar yang lebih bermakna.
-                </p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="fitur.html" class="cta-button focus:outline-none focus:ring-0">Lihat Fitur</a>
-                    <a href="data-siswa.html" class="cta-button-secondary focus:outline-none focus:ring-0">Coba Demo</a>
-                </div>
-            </div>
-        </section>
+        <!-- Footer -->
+        <footer class="pt-8 border-t border-white/5 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; 2026 Didaktika AI. Mitra cerdas pendidik masa depan.
+            </p>
+        </footer>
+
     </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
