@@ -1,243 +1,408 @@
-<!doctype html>
-<html lang="id">
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DidaktikaAI — Dashboard Guru (Demo)</title>
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              bg: '#F8FAFC',      
+              primary: '#2563EB', 
+              secondary: '#4F46E5', 
+              accent: '#06B6D4',  
+            }
+          },
+          animation: {
+            'pulse-soft': 'pulse-soft 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'blob': 'blob 7s infinite',
+          },
+          keyframes: {
+            'pulse-soft': {
+              '0%, 100%': { opacity: 0.8 },
+              '50%': { opacity: 0.5 },
+            },
+            blob: {
+              "0%": { transform: "translate(0px, 0px) scale(1)" },
+              "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+              "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+              "100%": { transform: "translate(0px, 0px) scale(1)" }
+            }
+          }
+        },
+      },
+    }
+  </script>
   <style>
-    body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 25%, #312e81 50%, #4c1d95 75%, #2e1065 100%);
-      background-attachment: fixed;
-      color: #e5e7eb;
-      min-height: 100vh;
+    /* CSS Variables untuk tema Light/Dark */
+    :root {
+      --grid-color: rgba(148, 163, 184, 0.1);
+      --glass-bg: rgba(255, 255, 255, 0.8);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: rgba(31, 38, 135, 0.05);
     }
 
-    /* Small custom styles for demo polish */
-    .card {
-      background: linear-gradient(180deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.5));
-      backdrop-filter: blur(10px);
-      border-color: rgba(99, 102, 241, 0.2);
+    .dark {
+      --grid-color: rgba(255, 255, 255, 0.05);
+      --glass-bg: rgba(30, 41, 59, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: rgba(0, 0, 0, 0.3);
     }
-    .glow {
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
+
+    /* Background Grid */
+    .bg-grid-slate {
+      background-size: 40px 40px;
+      background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                        linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, transparent, black, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 10%, black 90%, transparent); 
     }
-    .bar-bg { background: rgba(99, 102, 241, 0.1); }
-    .typewriter { overflow: hidden; white-space: nowrap; }
+
+    /* Glass Card Style */
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 8px 32px 0 var(--glass-shadow);
+        transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-2px);
+        border-color: #3B82F6;
+    }
+    
+    .dark .glass-card:hover {
+        border-color: #60A5FA;
+    }
+
+    .typewriter { overflow: hidden; white-space: nowrap; border-right: 2px solid #3B82F6; }
   </style>
 </head>
-<body class="text-slate-100 antialiased">
-  <header class="sticky top-0 bg-slate-900/60 backdrop-blur z-10 border-b border-indigo-500/20">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <div class="p-2 bg-gradient-to-br from-gray-200 to-white rounded-lg text-white shadow">
-          <!-- Simple logo -->
-         <img src="../assets/img/logo edutech.png" class="w-full h-6">
+<body class="bg-slate-50 text-slate-700 font-sans antialiased overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-700 dark:bg-slate-950 dark:text-slate-300 dark:selection:bg-cyan-900 dark:selection:text-cyan-100 transition-colors duration-300">
+
+  <!-- BACKGROUND ELEMENTS -->
+  <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+    <div class="absolute inset-0 bg-grid-slate transition-colors duration-300"></div>
+    <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[600px] h-[600px] bg-blue-400/20 dark:bg-blue-600/10 rounded-full blur-[100px] animate-pulse-soft"></div>
+    <div class="absolute top-20 right-20 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-600/10 rounded-full blur-[100px] animate-blob"></div>
+    <div class="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[600px] h-[600px] bg-cyan-400/20 dark:bg-cyan-600/10 rounded-full blur-[100px] animate-pulse-soft" style="animation-delay: 2s;"></div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-white/50 dark:border-white/5 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="relative h-9 w-9">
+            <div class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-cyan-500 rounded-lg transform rotate-6 transition-transform group-hover:rotate-12"></div>
+            <div class="absolute inset-0 bg-white dark:bg-slate-900 rounded-lg border-2 border-transparent flex items-center justify-center text-blue-600 dark:text-cyan-400 font-bold z-10">D</div>
         </div>
-        <div>
-          <h1 class="text-lg font-semibold text-slate-100">DidaktikaAI — Dashboard Guru (Demo)</h1>
-          <p class="text-sm text-slate-400">Demonstrasi konsep: Pemantauan berbantuan AI & pengajaran adaptif</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="text-sm text-slate-400">Tanggal: <time id="today"></time></div>
-        <button id="refresh" class="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-md text-sm hover:bg-indigo-100">
-          Muat Ulang AI
+        <span class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Didaktika<span class="text-blue-600 dark:text-cyan-400">AI</span></span>
+      </a>
+      
+      <div class="flex items-center gap-6">
+        <ul class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600 dark:text-slate-400">
+            <li><a href="fitur.html" class="hover:text-blue-600 dark:hover:text-cyan-400 transition-colors duration-300">Fitur</a></li>
+            <li><a href="cara-kerja.html" class="hover:text-blue-600 dark:hover:text-cyan-400 transition-colors duration-300">Cara kerja</a></li>
+            <li><a href="Tentang.html" class="hover:text-blue-600 dark:hover:text-cyan-400 transition-colors duration-300">Tentang</a></li>
+        </ul>
+
+        <!-- Dark Mode Toggle Button -->
+        <button id="theme-toggle" class="p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors focus:outline-none">
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd"></path></svg>
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
         </button>
+        
+        <a href="#" class="hidden sm:inline-flex px-5 py-2.5 bg-slate-900 hover:bg-blue-600 dark:bg-cyan-500/10 dark:text-cyan-400 dark:border dark:border-cyan-500/20 dark:hover:bg-cyan-500 dark:hover:text-white text-white font-medium rounded-full text-sm transition-all shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-0.5">
+            Ayo mulai
+        </a>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Left column: student + analysis -->
-    <section class="lg:col-span-2 space-y-6">
-      <!-- Student header card -->
-      <article class="card glow rounded-xl p-5 border">
-        <div class="flex items-center gap-4">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=3b3f1b4e4a8b3ed5f7f2b7e80c8c6cbe" alt="Avatar siswa" class="h-16 w-16 rounded-full object-cover ring-2 ring-indigo-400" />
-          <div class="flex-1">
-            <h2 class="text-xl font-semibold text-slate-100">Alex Morgan</h2>
-            <p class="text-sm text-slate-400">Kelas: 6 • Ruang Kelas: 6B</p>
-          </div>
-          <div class="text-right">
-            <div class="text-xs text-slate-500">Keterlibatan saat ini</div>
-            <div id="engagementBadge" class="mt-1 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-50 text-amber-700">Memuat...</div>
-          </div>
+  <main class="relative z-10 pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dashboard Toolbar -->
+    <div class="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" data-aos="fade-down">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Dashboard Guru (Demo)</h1>
+            <p class="text-slate-600 dark:text-slate-400 text-sm">Demonstrasi konsep: Pemantauan berbantuan AI & pengajaran adaptif</p>
         </div>
-      </article>
-
-      <!-- Learning Analysis (AI Simulation) -->
-      <article class="card glow rounded-xl p-6 border" aria-labelledby="analysis-heading">
-        <header class="flex items-start justify-between">
-          <div>
-            <h3 id="analysis-heading" class="text-lg font-semibold text-slate-100">Analisis Pembelajaran Siswa</h3>
-            <p class="text-sm text-slate-400 mt-1">Wawasan AI simulasi terhadap kekuatan, preferensi, dan metode yang direkomendasikan.</p>
-          </div>
-          <div class="text-sm text-slate-400">Kepercayaan: <span id="confidence">—</span></div>
-        </header>
-
-        <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Learning style breakdown -->
-          <div class="md:col-span-2">
-            <div class="flex items-center justify-between">
-              <h4 class="text-sm font-medium text-slate-100">Analisis gaya belajar</h4>
-              <span id="dominantStyle" class="text-xs text-slate-400">—</span>
+        <div class="flex items-center gap-3">
+            <div class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-600 dark:text-slate-300 shadow-sm flex items-center gap-2">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+                <time id="today"></time>
             </div>
-            <div class="mt-3 space-y-3">
-              <!-- Visual -->
-              <div>
-                <div class="flex justify-between mb-1 text-xs text-slate-400">
-                  <span>Visual</span><span id="visualPercent">—</span>
-                </div>
-                <div class="w-full h-3 rounded-full bar-bg overflow-hidden">
-                  <div id="visualBar" class="h-3 rounded-full bg-indigo-400" style="width:0%"></div>
-                </div>
-              </div>
-              <!-- Auditory -->
-              <div>
-                <div class="flex justify-between mb-1 text-xs text-slate-400">
-                  <span>Auditori</span><span id="auditoryPercent">—</span>
-                </div>
-                <div class="w-full h-3 rounded-full bar-bg overflow-hidden">
-                  <div id="auditoryBar" class="h-3 rounded-full bg-emerald-400" style="width:0%"></div>
-                </div>
-              </div>
-              <!-- Kinesthetic -->
-              <div>
-                <div class="flex justify-between mb-1 text-xs text-slate-400">
-                  <span>Kinestetik</span><span id="kinestheticPercent">—</span>
-                </div>
-                <div class="w-full h-3 rounded-full bar-bg overflow-hidden">
-                  <div id="kinestheticBar" class="h-3 rounded-full bg-rose-400" style="width:0%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- AI generated recommendation summary -->
-          <aside class="card rounded-lg p-4 border">
-            <div class="text-xs text-slate-400">Rekomendasi AI berdasarkan analisis pola belajar</div>
-            <h5 class="mt-2 text-sm font-semibold text-slate-100">Metode pembelajaran yang direkomendasikan</h5>
-            <p id="aiRecommendation" class="mt-2 text-sm text-slate-300">Menghasilkan...</p>
-          </aside>
+            <button id="refresh" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-cyan-600 dark:hover:bg-cyan-700 text-white rounded-lg text-sm font-medium transition-all shadow-md active:scale-95">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                Muat Ulang AI
+            </button>
         </div>
+    </div>
 
-        <div class="mt-5">
-          <h4 class="text-sm font-medium text-slate-100">Rekomendasi Pengajaran Adaptif</h4>
-          <p class="text-sm text-slate-400 mt-1">Pendekatan yang disarankan dan penyesuaian konten untuk meningkatkan keterlibatan dan pemahaman.</p>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left column: student + analysis -->
+        <section class="lg:col-span-2 space-y-6">
+            
+            <!-- Student Header Card -->
+            <article class="glass-card rounded-2xl p-6" data-aos="fade-up">
+                <div class="flex items-center gap-5">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop" alt="Avatar siswa" class="h-20 w-20 rounded-2xl object-cover ring-2 ring-white dark:ring-slate-700 shadow-md" />
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Alex Morgan</h2>
+                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Kelas: 6 • Ruang Kelas: 6B</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Keterlibatan</div>
+                        <div id="engagementBadge" class="mt-1 inline-flex items-center px-3 py-1 rounded-full text-sm font-bold shadow-sm transition-all">Memuat...</div>
+                    </div>
+                </div>
+            </article>
 
-          <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="rounded-lg border p-4 bg-slate-800/50">
-              <div class="text-sm font-medium text-slate-100">Pendekatan pengajaran yang disarankan</div>
-              <div id="teachingApproach" class="mt-2 text-sm text-slate-300">—</div>
-            </div>
+            <!-- Learning Analysis (AI Simulation) -->
+            <article class="glass-card rounded-2xl p-6" aria-labelledby="analysis-heading" data-aos="fade-up" data-aos-delay="100">
+                <header class="flex items-start justify-between mb-6">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-purple-100 dark:bg-purple-500/20 rounded-lg text-purple-600 dark:text-purple-400">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="analysis-heading" class="text-lg font-bold text-slate-900 dark:text-white">Analisis Pembelajaran</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">Wawasan AI terhadap kekuatan & preferensi siswa.</p>
+                        </div>
+                    </div>
+                    <div class="text-xs font-medium px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400">
+                        Kepercayaan: <span id="confidence" class="font-bold text-slate-900 dark:text-white">—</span>
+                    </div>
+                </header>
 
-            <div class="rounded-lg border p-4 bg-slate-800/50">
-              <div class="text-sm font-medium text-slate-100">Penyesuaian konten yang disarankan</div>
-              <ul id="contentAdjustments" class="mt-2 text-sm text-slate-300 list-disc list-inside space-y-1">
-                <li>—</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </article>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Learning style breakdown -->
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-2">
+                            <h4 class="text-sm font-semibold text-slate-900 dark:text-white">Dominasi Gaya Belajar</h4>
+                            <span id="dominantStyle" class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">—</span>
+                        </div>
+                        
+                        <!-- Visual -->
+                        <div>
+                            <div class="flex justify-between mb-1 text-xs font-medium text-slate-600 dark:text-slate-400">
+                                <span>Visual</span><span id="visualPercent">—</span>
+                            </div>
+                            <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                                <div id="visualBar" class="h-2.5 rounded-full bg-blue-500 dark:bg-blue-400 transition-all duration-1000" style="width:0%"></div>
+                            </div>
+                        </div>
+                        <!-- Auditory -->
+                        <div>
+                            <div class="flex justify-between mb-1 text-xs font-medium text-slate-600 dark:text-slate-400">
+                                <span>Auditori</span><span id="auditoryPercent">—</span>
+                            </div>
+                            <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                                <div id="auditoryBar" class="h-2.5 rounded-full bg-purple-500 dark:bg-purple-400 transition-all duration-1000" style="width:0%"></div>
+                            </div>
+                        </div>
+                        <!-- Kinesthetic -->
+                        <div>
+                            <div class="flex justify-between mb-1 text-xs font-medium text-slate-600 dark:text-slate-400">
+                                <span>Kinestetik</span><span id="kinestheticPercent">—</span>
+                            </div>
+                            <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                                <div id="kinestheticBar" class="h-2.5 rounded-full bg-rose-500 dark:bg-rose-400 transition-all duration-1000" style="width:0%"></div>
+                            </div>
+                        </div>
+                    </div>
 
-      <!-- Sign Language Interpreter (Demo) -->
-     
-    </section>
+                    <!-- AI generated recommendation summary -->
+                    <aside class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-800/50 rounded-xl p-4 border border-blue-100 dark:border-slate-700">
+                        <div class="text-xs font-bold text-blue-600 dark:text-blue-400 mb-2 uppercase tracking-wider">Rekomendasi AI</div>
+                        <p id="aiRecommendation" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Menghasilkan...</p>
+                    </aside>
+                </div>
 
-    <!-- Right column: performance & accessibility -->
-    <aside class="space-y-6">
-      <!-- Performance Overview -->
-      <section class="card glow rounded-xl p-5 border" aria-labelledby="performance-heading">
-        <h3 id="performance-heading" class="text-lg font-semibold text-slate-100">Gambaran Kinerja Siswa</h3>
-        <p class="text-sm text-slate-400 mt-1">Indikator cepat kemajuan akademik dan estimasi tren.</p>
+                <div class="mt-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-indigo-500"></i>
+                        Strategi Adaptif
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                            <div class="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold mb-1">Pendekatan</div>
+                            <div id="teachingApproach" class="text-sm font-medium text-slate-800 dark:text-slate-200">—</div>
+                        </div>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                            <div class="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold mb-1">Penyesuaian Konten</div>
+                            <ul id="contentAdjustments" class="text-sm text-slate-800 dark:text-slate-200 list-disc list-inside space-y-1">
+                                <li>—</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
 
-        <div class="mt-4">
-          <div class="flex items-baseline justify-between">
-            <div>
-              <div class="text-xs text-slate-400">Skor estimasi</div>
-              <div id="score" class="text-3xl font-bold text-emerald-400">—%</div>
-            </div>
-            <div class="text-sm text-slate-400 text-right">
-              <div>Tren</div>
-              <div id="trendBadge" class="mt-1 inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300">—</div>
-            </div>
-          </div>
+        <!-- Right column: performance & accessibility -->
+        <aside class="space-y-6">
+            <!-- Performance Overview -->
+            <section class="glass-card rounded-2xl p-6" data-aos="fade-left">
+                <h3 id="performance-heading" class="text-lg font-bold text-slate-900 dark:text-white mb-1">Kinerja Siswa</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Estimasi kemajuan akademik.</p>
 
-          <div class="mt-4">
-            <div class="h-3 rounded-full bar-bg overflow-hidden">
-              <div id="scoreBar" class="h-3 rounded-full bg-emerald-500" style="width:0%"></div>
-            </div>
-            <div class="mt-2 text-xs text-slate-400">Kemajuan menuju target semester</div>
-          </div>
+                <div class="flex items-baseline justify-between">
+                    <div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 mb-1">Skor Estimasi</div>
+                        <div id="score" class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">—%</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs text-slate-500 dark:text-slate-400 mb-1">Tren</div>
+                        <div id="trendBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">—</div>
+                    </div>
+                </div>
 
-          <div class="mt-4">
-            <div class="h-12 w-full bg-slate-800/50 rounded-lg border border-indigo-500/30 flex items-center justify-center text-sm text-slate-400">
-              Tren visual (konsep): <svg class="ml-2 h-6 w-20" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <polyline id="trendLine" points="0,22 20,18 40,12 60,9 80,6 100,4" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
+                <div class="mt-4">
+                    <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                        <div id="scoreBar" class="h-2 rounded-full bg-emerald-500 transition-all duration-1000" style="width:0%"></div>
+                    </div>
+                </div>
 
-      <!-- Accessibility & Inclusive Education -->
-      <section class="card glow rounded-xl p-5 border" aria-labelledby="access-heading">
-        <h3 id="access-heading" class="text-lg font-semibold text-slate-100">Status Aksesibilitas Pembelajaran</h3>
-        <p class="text-sm text-slate-400 mt-1">Saran AI dan dukungan aksesibilitas otomatis untuk siswa ini.</p>
+                <div class="mt-6 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700 flex flex-col items-center justify-center">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 mb-2">Grafik Tren Mingguan</span>
+                    <svg class="w-full h-12 stroke-emerald-500 dark:stroke-emerald-400" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline id="trendLine" points="0,22 20,18 40,12 60,9 80,6 100,4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </section>
 
-        <div class="mt-4 space-y-3">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="text-sm font-medium text-slate-100">Dukungan Bahasa Isyarat</div>
-              <div class="text-xs text-slate-400">Interpretasi real-time & teks (status demo)</div>
-            </div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-sm">Diaktifkan</div>
-          </div>
+            <!-- Accessibility -->
+            <section class="glass-card rounded-2xl p-6" data-aos="fade-left" data-aos-delay="100">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Aksesibilitas</h3>
+                    <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                        <i data-lucide="accessibility" class="w-4 h-4"></i>
+                    </div>
+                </div>
 
-          <div class="text-sm text-slate-300">
-            <p id="accessExplanation">Untuk memastikan komunikasi inklusif, sistem AI secara otomatis mengaktifkan dukungan interpretasi bahasa isyarat untuk siswa ini.</p>
-          </div>
+                <div class="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-800/30">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-bold text-slate-800 dark:text-slate-200">Bahasa Isyarat</span>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">Aktif</span>
+                    </div>
+                    <p id="accessExplanation" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-3">AI mengaktifkan interpretasi bahasa isyarat otomatis untuk siswa ini.</p>
+                    
+                    <button id="copyAccessibility" class="w-full py-1.5 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+                        Salin Catatan
+                    </button>
+                </div>
+            </section>
 
-          <div>
-            <button id="copyAccessibility" class="px-3 py-1.5 bg-indigo-600 text-white rounded-md text-sm hover:bg-indigo-700">Salin catatan aksesibilitas</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Quick actions -->
-      <section class="card glow rounded-xl p-4 border">
-        <h4 class="text-sm font-semibold text-slate-100">Tindakan Guru (Demo)</h4>
-        <p class="text-xs text-slate-400 mt-1">Langkah selanjutnya yang disarankan untuk mendukung siswa ini</p>
-        <ul class="mt-3 space-y-2 text-sm">
-          <li class="flex items-start gap-2">
-            <span class="mt-1 text-indigo-400">•</span>
-            <div>
-              <div class="font-medium text-slate-100">Jadwalkan pertemuan 10 menit</div>
-              <div class="text-xs text-slate-400">Dukungan empati yang ditargetkan setelah mengamati keterlibatan rendah.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="mt-1 text-indigo-400">•</span>
-            <div>
-              <div class="font-medium text-slate-100">Bagikan ringkasan visual</div>
-              <div class="text-xs text-slate-400">Prioritaskan diagram dan slide beranotasi untuk siswa ini.</div>
-            </div>
-          </li>
-        </ul>
-      </section>
-    </aside>
+            <!-- Quick Actions -->
+            <section class="glass-card rounded-2xl p-6" data-aos="fade-left" data-aos-delay="200">
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider">Tindakan Disarankan</h4>
+                <ul class="space-y-3">
+                    <li class="flex gap-3 items-start p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-xl transition-colors cursor-pointer group">
+                        <div class="mt-0.5 text-indigo-500 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 p-1.5 rounded-lg group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/40 transition-colors">
+                            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-800 dark:text-slate-200">Jadwalkan Sesi 1-on-1</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Fokus pada engagement yang menurun.</div>
+                        </div>
+                    </li>
+                    <li class="flex gap-3 items-start p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-xl transition-colors cursor-pointer group">
+                        <div class="mt-0.5 text-cyan-500 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 p-1.5 rounded-lg group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/40 transition-colors">
+                            <i data-lucide="image" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-800 dark:text-slate-200">Kirim Ringkasan Visual</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Sesuai preferensi gaya belajar.</div>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+    </div>
   </main>
 
-  <footer class="max-w-7xl mx-auto px-4 py-6 text-sm text-slate-400">Hanya demo — Ini adalah antarmuka konseptual yang dirancang untuk menggambarkan bagaimana wawasan AI dapat membantu guru sambil memprioritaskan aksesibilitas dan empati.
-    <div></div>
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden mt-12 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div class="text-center">
+        <p class="text-sm text-slate-500 dark:text-slate-400">
+            Hanya demo — Antarmuka konseptual untuk menggambarkan wawasan AI dalam pendidikan inklusif.
+        </p>
+        <div class="mt-4 text-xs text-slate-400 dark:text-slate-600">
+            © 2026 DidaktikaAI
+        </div>
+      </div>
+    </div>
   </footer>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    // Mock data for the demo
+    // Init Lucide Icons
+    lucide.createIcons();
+
+    // Init AOS
+    AOS.init({
+        once: true,
+        duration: 800,
+        easing: 'ease-out-cubic',
+    });
+
+    // Dark Mode Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    // Check localStorage or System Preference
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcon.classList.remove('hidden');
+        document.documentElement.classList.add('dark');
+    } else {
+        themeToggleDarkIcon.classList.remove('hidden');
+        document.documentElement.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        if (localStorage.getItem('color-theme')) {
+            if (localStorage.getItem('color-theme') === 'light') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            }
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+    });
+
+    // --- DASHBOARD LOGIC ---
+
+    // Mock Data
     const mockStudent = {
       name: "Alex Morgan",
       grade: 6,
@@ -246,15 +411,15 @@
         auditory: 18,
         kinesthetic: 20
       },
-      engagement: "Sedang", // Rendah / Sedang / Tinggi
+      engagement: "Sedang", // Rendah, Sedang, Tinggi
       scorePercent: 78,
-      trend: "Meningkat", // Meningkat / Stabil / Menurun
+      trend: "Meningkat",
       accessibility: {
         signLanguage: true
       }
     };
 
-    // Utility: typewriter effect for demo outputs
+    // Typewriter Utility
     function typewriter(element, text, opts = {}) {
       const speed = opts.speed ?? 25;
       element.textContent = "";
@@ -270,61 +435,50 @@
       }, speed);
     }
 
-    // Map recommended teaching approach for each dominant style
+    // Approach Map
     const approachMap = {
       visual: {
         approach: "Tunjukkan-gambar-jelaskan",
         adjustments: [
-          "Gunakan diagram beranotasi dan infografis",
-          "Ganti blok teks panjang dengan visual langkah demi langkah",
-          "Tawarkan ringkasan visual yang dapat dicetak untuk ditinjau"
+          "Gunakan diagram beranotasi",
+          "Ganti teks panjang dengan infografis",
+          "Sediakan ringkasan visual cetak"
         ]
       },
       auditory: {
         approach: "Penjelasan lisan & rekap",
         adjustments: [
-          "Sertakan panduan naratif singkat",
-          "Dorong diskusi teman sebaya dan rekap audio",
-          "Tambahkan penjelasan lisan opsional dan teks"
+          "Panduan naratif singkat",
+          "Diskusi teman sebaya",
+          "Rekap audio pasca-materi"
         ]
       },
       kinesthetic: {
         approach: "Praktik langsung & interaktif",
         adjustments: [
-          "Tambahkan tugas interaktif singkat dan manipulatif",
-          "Pecah pelajaran menjadi mini-aktivitas gaya laboratorium",
-          "Berikan petunjuk berbasis gerakan untuk memperkuat konsep"
+          "Tugas interaktif mini",
+          "Eksperimen lab virtual",
+          "Pembelajaran berbasis gerakan"
         ]
       }
     };
 
-    // Generate a realistic-sounding AI insight (mock)
+    // AI Insight Generator
     function generateAIInsight(student) {
-      // Determine dominant style
       const styles = student.learningStyle;
       const pairs = Object.entries(styles);
       pairs.sort((a,b) => b[1] - a[1]);
       const dominant = pairs[0][0];
-      const conf = Math.round(60 + Math.random() * 35); // 60-95%
+      const conf = Math.round(60 + Math.random() * 35);
       const engagement = student.engagement;
 
-      // Compose natural-sounding recommendation text
-      const observations = [
-        `Pola dalam respons tugas menunjukkan preferensi untuk isyarat ${dominant}.`,
-        `Keterlibatan telah ${engagement.toLowerCase()} selama aktivitas multi-langkah.`,
-        `Waktu respons lebih cepat ketika materi menyertakan struktur visual yang jelas.`
-      ];
       const suggested = {
-        visual: "Prioritaskan diagram, contoh yang disorot, dan peta konsep. Rekap visual singkat setelah setiap tujuan kemungkinan akan meningkatkan retensi.",
-        auditory: "Sertakan ringkasan naratif singkat dan dorong diskusi baca-lantang. Petunjuk audio yang terkait dengan tugas dapat meningkatkan fokus.",
-        kinesthetic: "Tambahkan aktivitas praktik singkat dan interaksi fisik singkat (misalnya, tugas berbasis gerakan) untuk mengikat ide-ide abstrak."
+        visual: "Siswa merespons sangat baik terhadap materi visual. Diagram dan peta konsep meningkatkan retensi hingga 40%.",
+        auditory: "Diskusi dan materi audio sangat efektif. Siswa cenderung lebih fokus saat mendengarkan penjelasan naratif.",
+        kinesthetic: "Keterlibatan meningkat drastis saat diberikan tugas interaktif atau simulasi praktik."
       };
 
-      const recommendationText = [
-        observations.join(" "),
-        suggested[dominant],
-        "Langkah selanjutnya yang disarankan: tinjauan visual terpandu 10 menit dengan pertanyaan formatif."
-      ].join(" ");
+      const recommendationText = suggested[dominant] + ` Tingkat keterlibatan saat ini: ${engagement}.`;
 
       return {
         dominant,
@@ -335,60 +489,68 @@
       };
     }
 
-    // Render initial UI with mock data
+    // Render Dashboard
     function render(student) {
-      document.getElementById("today").textContent = new Date().toLocaleDateString('id-ID');
+      // Date
+      document.getElementById("today").textContent = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
 
-      // Engagement
+      // Engagement Badge
       const badge = document.getElementById("engagementBadge");
-      const engMap = { "Low": "Rendah", "Medium": "Sedang", "High": "Tinggi" };
-      badge.textContent = engMap[student.engagement] || student.engagement;
-      badge.className = "mt-1 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium";
-      if (student.engagement === "Tinggi" || student.engagement === "High") {
-        badge.classList.add("bg-emerald-50","text-emerald-700");
-      } else if (student.engagement === "Sedang" || student.engagement === "Medium") {
-        badge.classList.add("bg-amber-50","text-amber-700");
+      badge.textContent = student.engagement;
+      
+      // Reset classes
+      badge.className = "mt-1 inline-flex items-center px-3 py-1 rounded-full text-sm font-bold shadow-sm transition-all";
+      
+      if (student.engagement === "Tinggi") {
+        badge.classList.add("bg-emerald-100", "text-emerald-700", "dark:bg-emerald-900/30", "dark:text-emerald-400");
+      } else if (student.engagement === "Sedang") {
+        badge.classList.add("bg-amber-100", "text-amber-700", "dark:bg-amber-900/30", "dark:text-amber-400");
       } else {
-        badge.classList.add("bg-rose-50","text-rose-700");
+        badge.classList.add("bg-rose-100", "text-rose-700", "dark:bg-rose-900/30", "dark:text-rose-400");
       }
 
-      // Learning style bars
+      // Progress Bars
       const vs = student.learningStyle;
       document.getElementById("visualPercent").textContent = vs.visual + "%";
       document.getElementById("auditoryPercent").textContent = vs.auditory + "%";
       document.getElementById("kinestheticPercent").textContent = vs.kinesthetic + "%";
-      document.getElementById("visualBar").style.width = vs.visual + "%";
-      document.getElementById("auditoryBar").style.width = vs.auditory + "%";
-      document.getElementById("kinestheticBar").style.width = vs.kinesthetic + "%";
+      
+      setTimeout(() => {
+          document.getElementById("visualBar").style.width = vs.visual + "%";
+          document.getElementById("auditoryBar").style.width = vs.auditory + "%";
+          document.getElementById("kinestheticBar").style.width = vs.kinesthetic + "%";
+      }, 300);
 
-      // Performance
+      // Score
       document.getElementById("score").textContent = student.scorePercent + "%";
-      document.getElementById("scoreBar").style.width = student.scorePercent + "%";
-      const trendMap = { "Improving": "Meningkat", "Stable": "Stabil", "Declining": "Menurun" };
-      document.getElementById("trendBadge").textContent = trendMap[student.trend] || student.trend;
+      setTimeout(() => {
+          document.getElementById("scoreBar").style.width = student.scorePercent + "%";
+      }, 300);
 
-      // Accessibility explanation copy
-      document.getElementById("accessExplanation").textContent = "Untuk memastikan komunikasi inklusif, sistem AI secara otomatis mengaktifkan dukungan interpretasi bahasa isyarat untuk siswa ini.";
+      // Trend
+      const trendEl = document.getElementById("trendBadge");
+      trendEl.textContent = student.trend;
+      if(student.trend === "Meningkat") {
+          trendEl.classList.add("text-emerald-600", "bg-emerald-50", "dark:text-emerald-400", "dark:bg-emerald-900/20");
+      } else if (student.trend === "Menurun") {
+          trendEl.classList.add("text-rose-600", "bg-rose-50", "dark:text-rose-400", "dark:bg-rose-900/20");
+      }
 
-      // Initial AI insight
+      // Generate AI Insights
       const insight = generateAIInsight(student);
-      applyAIInsight(insight);
-    }
-
-    // Apply generated insight to UI with subtle animations
-    function applyAIInsight(insight) {
-      // dominant style label
+      
+      // Dominant Label
       const domMap = { visual: "Visual", auditory: "Auditori", kinesthetic: "Kinestetik" };
       document.getElementById("dominantStyle").textContent = domMap[insight.dominant];
-
-      // confidence
+      
+      // Confidence
       document.getElementById("confidence").textContent = insight.confidence + "%";
 
-      // AI recommendation text (typewriter)
+      // Typewriter Recommendation
       const recEl = document.getElementById("aiRecommendation");
-      typewriter(recEl, insight.text, { speed: 14 });
+      typewriter(recEl, insight.text, { speed: 20 });
 
-      // Teaching approach & adjustments
+      // Strategy
       document.getElementById("teachingApproach").textContent = insight.approach;
       const list = document.getElementById("contentAdjustments");
       list.innerHTML = "";
@@ -399,66 +561,50 @@
       });
     }
 
-    // Hook up Regenerate button to show new AI insight
+    // Refresh Button Logic
     document.getElementById("refresh").addEventListener("click", () => {
-      // Simulate small style/probability shifts for a realistic demo
+      // Create random variations
       const jittered = JSON.parse(JSON.stringify(mockStudent));
-      // small random changes
-      const r = Math.floor(Math.random()*7) - 3; // -3..3
-      jittered.learningStyle.visual = Math.max(10, Math.min(90, jittered.learningStyle.visual + r));
-      // normalize others so sum ~100
+      
+      // Randomize styles
+      const r = Math.floor(Math.random()*15) - 7;
+      jittered.learningStyle.visual = Math.max(10, Math.min(90, 62 + r));
       const remaining = 100 - jittered.learningStyle.visual;
-      const split = Math.round(remaining * (Math.random() * 0.6 + 0.2));
-      jittered.learningStyle.auditory = Math.max(5, Math.min(90, split));
-      jittered.learningStyle.kinesthetic = 100 - jittered.learningStyle.visual - jittered.learningStyle.auditory;
-      // change engagement randomly
-      const e = ["Rendah","Sedang","Tinggi"][Math.floor(Math.random()*3)];
-      jittered.engagement = e;
-      // change score slightly
-      jittered.scorePercent = Math.max(45, Math.min(98, jittered.scorePercent + (Math.floor(Math.random()*7)-3)));
+      jittered.learningStyle.auditory = Math.round(remaining * Math.random());
+      jittered.learningStyle.kinesthetic = remaining - jittered.learningStyle.auditory;
+      
+      // Randomize engagement
+      const engs = ["Rendah", "Sedang", "Tinggi"];
+      jittered.engagement = engs[Math.floor(Math.random() * engs.length)];
+      
+      // Randomize Score
+      jittered.scorePercent = Math.max(50, Math.min(99, 78 + (Math.floor(Math.random()*10)-5)));
+      
       render(jittered);
     });
 
-    // Sign Language Interpreter demo behaviour
-    document.getElementById("activateInterpreter").addEventListener("click", () => {
-      const out = document.getElementById("interpreterOutput");
-      out.classList.remove("text-slate-400");
-      // Simulated detection sentences to randomize demo
-      const sampleResponses = [
-        "AI mendeteksi respons siswa: 'Saya belum memahami topik ini.'",
-        "AI mendeteksi respons siswa: 'Bisakah kita melihat contoh lain?'",
-        "AI mendeteksi respons siswa: 'Ini lebih mudah dengan diagram.'",
-        "AI mendeteksi respons siswa: 'Saya butuh istirahat sebentar.'"
-      ];
-      const msg = sampleResponses[Math.floor(Math.random()*sampleResponses.length)];
-      // show with typewriter for realism
-      typewriter(out, msg, { speed: 20 });
-    });
-
-    // Copy accessibility note
+    // Copy Button Logic
     document.getElementById("copyAccessibility").addEventListener("click", async () => {
-      const note = document.getElementById("accessExplanation").textContent;
-      try {
-        await navigator.clipboard.writeText(note);
         const btn = document.getElementById("copyAccessibility");
-        const prev = btn.innerHTML;
-        btn.innerHTML = "Tersalin ✓";
-        setTimeout(() => btn.innerHTML = prev, 1500);
-      } catch (e) {
-        alert("Tidak dapat menyalin — browser Anda mungkin memblokir akses clipboard.");
-      }
+        const originalText = btn.innerText;
+        
+        try {
+            await navigator.clipboard.writeText(document.getElementById("accessExplanation").innerText);
+            btn.innerText = "Tersalin!";
+            btn.classList.add("bg-green-100", "text-green-700", "border-green-200");
+        } catch (err) {
+            btn.innerText = "Gagal";
+        }
+
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.classList.remove("bg-green-100", "text-green-700", "border-green-200");
+        }, 2000);
     });
 
-    // Initial render
+    // Initial Render
     render(mockStudent);
 
-    // Small accessibility: announce when page is ready
-    window.addEventListener('load', () => {
-      const main = document.querySelector('main');
-      if (main) {
-        main.setAttribute('tabindex', '-1');
-      }
-    });
   </script>
 </body>
 </html>

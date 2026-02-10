@@ -9,35 +9,55 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #030712; /* Gray 950 */
-            color: #F9FAFB;
-            overflow-x: hidden;
+        :root {
+            /* Light Mode Variables (Default) */
+            --bg-color: #F3F4F6;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --glass-hover: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(255, 255, 255, 0.8);
         }
 
-        /* Glassmorphism Card Style */
+        .dark {
+            /* Dark Mode Variables */
+            --bg-color: #030712;
+            --text-main: #F9FAFB;
+            --text-muted: #9CA3AF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-hover: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            --input-bg: rgba(0, 0, 0, 0.4);
+            --nav-bg: rgba(3, 7, 18, 0.8);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Glassmorphism Card Style - Adaptive */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
+            background: var(--glass-hover);
+            border-color: rgba(139, 92, 246, 0.3); /* Violet hint on hover */
             transform: translateY(-2px);
-        }
-
-        /* Gradient Text */
-        .text-gradient {
-            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.15);
         }
 
         /* Animations */
@@ -64,9 +84,17 @@
         .btn-ai:hover::before {
             left: 100%;
         }
+
+        /* Blur Transition for Login */
+        .blur-content {
+            filter: blur(8px);
+            pointer-events: none;
+            user-select: none;
+        }
     </style>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -78,293 +106,893 @@
         }
     </script>
 </head>
-<body class="bg-slate-950 antialiased selection:bg-violet-500/30 selection:text-violet-200">
+<body class="antialiased selection:bg-violet-500/30 selection:text-violet-600 dark:selection:text-violet-200">
 
-    <!-- Background Ambience -->
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[100px]"></div>
-        <div class="absolute bottom-[10%] right-[-5%] w-[400px] h-[400px] bg-sky-500/10 rounded-full blur-[100px]"></div>
-    </div>
+    <!-- Theme Init Script: Default to Light Mode -->
+    <script>
+        // Cek localStorage, jika 'dark' maka set dark, jika tidak ada/light maka default light
+        if (localStorage.theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            // Kita hapus pengecekan system preference untuk memprioritaskan light mode sesuai request
+            localStorage.theme = 'light';
+        }
+    </script>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 left-0 border-b border-white/5 bg-[#030712]/80 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-white">
-                        <img src="../assets/img/logo edutech.png" onerror="this.src='https://via.placeholder.com/32x32/8b5cf6/ffffff?text=D'" alt="Logo">
+    <!-- LOGIN MODAL (OVERLAY) -->
+    <div id="login-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-gray-50/90 dark:bg-[#030712]/90 backdrop-blur-md transition-all duration-700">
+        <div class="glass-card p-8 rounded-3xl w-full max-w-sm mx-4 shadow-2xl relative overflow-hidden animate-fade-up border border-gray-200 dark:border-white/10">
+            <!-- Decorative blobs inside modal -->
+            <div class="absolute top-[-50%] left-[-50%] w-full h-full bg-violet-400/20 dark:bg-violet-600/30 rounded-full blur-[80px]"></div>
+            <div class="absolute bottom-[-50%] right-[-50%] w-full h-full bg-sky-400/20 dark:bg-sky-600/30 rounded-full blur-[80px]"></div>
+            
+            <div class="relative z-10 text-center">
+                <div class="w-16 h-16 bg-white/50 dark:bg-white/5 rounded-2xl mx-auto flex items-center justify-center mb-6 border border-gray-200 dark:border-white/10 shadow-lg">
+                    <i data-lucide="lock" class="w-8 h-8 text-violet-600 dark:text-white"></i>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Portal Guru</h2>
+                <p class="text-gray-500 dark:text-gray-400 mb-8 text-sm">Masuk untuk mengelola data</p>
+
+                <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Username</label>
+                        <div class="relative group">
+                            <i data-lucide="user" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-violet-500 transition-colors"></i>
+                            <input type="text" id="username" class="w-full bg-white dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl py-3 pl-10 pr-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all shadow-sm" placeholder="admin">
+                        </div>
                     </div>
-                    <span class="font-bold text-lg tracking-tight">Didaktika <span class="font-light opacity-80">AI</span></span>
-                </div>
-                <!-- Menu Desktop -->
-                <div class="hidden sm:flex gap-8 text-sm font-medium text-gray-400">
-                    <a href="index.html" class="hover:text-white transition-colors">Beranda</a>
-                    <a href="fitur.html" class="hover:text-white transition-colors">Fitur</a>
-                    <a href="data_guru.html" class="text-white relative after:content-[''] after:absolute after:-bottom-5 after:left-0 after:w-full after:h-0.5 after:bg-violet-500 after:shadow-[0_0_10px_#8b5cf6]">Data Guru</a>
-                    <a href="Tentang.html" class="hover:text-white transition-colors">Tentang</a>
-                </div>
-                <!-- Mobile Menu Button -->
-                <button class="sm:hidden text-gray-400 hover:text-white">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Password</label>
+                        <div class="relative group">
+                            <i data-lucide="key" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-violet-500 transition-colors"></i>
+                            <input type="password" id="password" class="w-full bg-white dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl py-3 pl-10 pr-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all shadow-sm" placeholder="••••">
+                        </div>
+                    </div>
+                    
+                    <div id="login-message" class="text-red-500 dark:text-red-400 text-xs text-center h-4 font-medium transition-all opacity-0">Username/Password salah!</div>
+
+                    <button type="submit" class="w-full btn-ai py-3.5 rounded-xl font-bold text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 mt-2 flex items-center justify-center gap-2 group">
+                        Masuk Sistem <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+
+                    <div class="text-center mt-6">
+                        <p class="text-xs text-gray-500 dark:text-gray-500">Demo: <span class="font-mono font-bold">admin</span> / <span class="font-mono font-bold">admin</span></p>
+                    </div>
+                </form>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <!-- Main Content -->
-    <main class="relative z-10 container mx-auto px-4 py-24 md:py-28 max-w-7xl">
-
-        <!-- Header Section -->
-        <header class="mb-10 animate-fade-up">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs font-semibold tracking-wider uppercase mb-3">
-                        <i data-lucide="shield-check" class="w-3 h-3"></i>
-                        Portal Pengajar
-                    </div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Profil & Data Guru</h1>
-                    <p class="text-gray-400 max-w-xl">Kelola informasi profil, jadwal mengajar, dan materi pembelajaran adaptif Anda di satu tempat.</p>
-                </div>
-                
-                <div class="flex gap-3">
-                    <button class="glass-card px-4 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:text-white flex items-center gap-2">
-                        <i data-lucide="settings" class="w-4 h-4"></i>
-                        Pengaturan
-                    </button>
-                    <button class="glass-card px-4 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:text-white flex items-center gap-2 bg-white/5">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        Export Data
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <!-- Content Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-fade-up" style="animation-delay: 0.1s;">
+    <!-- MAIN APP CONTENT (Initially Blurred) -->
+    <div id="main-app" class="transition-all duration-700 blur-sm pointer-events-none">
+        
+        <!-- Background Ambience -->
+        <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+            <!-- Light Mode Blobs -->
+            <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-violet-200/50 rounded-full blur-[100px] dark:hidden"></div>
+            <div class="absolute bottom-[10%] right-[-5%] w-[400px] h-[400px] bg-sky-200/50 rounded-full blur-[100px] dark:hidden"></div>
             
-            <!-- LEFT COLUMN: Profile Identity (4 Cols) -->
-            <div class="lg:col-span-4 space-y-6">
-                <!-- Profile Card -->
-                <div class="glass-card rounded-3xl p-6 text-center relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-violet-900/50 to-sky-900/50"></div>
-                    
-                    <div class="relative z-10 mt-8 mb-4">
-                        <div class="w-28 h-28 mx-auto rounded-full p-1 bg-gradient-to-br from-violet-500 to-sky-500">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" 
-                                 class="w-full h-full rounded-full object-cover border-4 border-[#0B0F19]" 
-                                 alt="Foto Guru">
-                        </div>
-                    </div>
-                    
-                    <h2 class="text-xl font-bold text-white">Sarah Wulandari, S.Pd.</h2>
-                    <p class="text-violet-400 font-medium text-sm mb-4">Guru Matematika</p>
-                    
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 mb-6">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        Status: Aktif
-                    </div>
+            <!-- Dark Mode Blobs -->
+            <div class="hidden dark:block absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[100px]"></div>
+            <div class="hidden dark:block absolute bottom-[10%] right-[-5%] w-[400px] h-[400px] bg-sky-500/10 rounded-full blur-[100px]"></div>
+        </div>
 
-                    <div class="space-y-4 text-left border-t border-white/5 pt-6">
-                        <div class="flex justify-between items-center group/item hover:bg-white/5 p-2 rounded-lg transition-colors">
-                            <div class="flex items-center gap-3 text-gray-400">
-                                <div class="p-2 bg-white/5 rounded-lg"><i data-lucide="id-card" class="w-4 h-4"></i></div>
-                                <span class="text-sm">NIP</span>
-                            </div>
-                            <span class="text-sm font-medium text-white">19850124 201001 2 003</span>
+        <!-- Navigation -->
+        <nav class="fixed w-full z-40 top-0 left-0 border-b border-gray-200 dark:border-white/5 bg-white/80 dark:bg-[#030712]/80 backdrop-blur-md transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center text-white shadow-md">
+                            <i data-lucide="school" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-lg tracking-tight text-gray-900 dark:text-white">Didaktika <span class="font-light opacity-80">AI</span></span>
+                    </div>
+                    
+                    <!-- Right Menu -->
+                    <div class="flex items-center gap-6">
+                        <!-- Menu Desktop -->
+                        <div class="hidden sm:flex gap-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                            <a href="index.html" class="hover:text-violet-600 dark:hover:text-white transition-colors">Beranda</a>
+                            <a href="fitur.html" class="hover:text-violet-600 dark:hover:text-white transition-colors">Fitur</a>
+                            <a href="data_guru.html" class="text-violet-600 dark:text-white relative font-semibold after:content-[''] after:absolute after:-bottom-5 after:left-0 after:w-full after:h-0.5 after:bg-violet-600 dark:after:bg-violet-500">Data Guru</a>
+                            <a href="Tentang.html" class="hover:text-violet-600 dark:hover:text-white transition-colors">Tentang</a>
                         </div>
                         
-                        <div class="flex justify-between items-center group/item hover:bg-white/5 p-2 rounded-lg transition-colors">
-                            <div class="flex items-center gap-3 text-gray-400">
-                                <div class="p-2 bg-white/5 rounded-lg"><i data-lucide="mail" class="w-4 h-4"></i></div>
-                                <span class="text-sm">Email</span>
-                            </div>
-                            <span class="text-sm font-medium text-white">sarah.w@sekolah.id</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center group/item hover:bg-white/5 p-2 rounded-lg transition-colors">
-                            <div class="flex items-center gap-3 text-gray-400">
-                                <div class="p-2 bg-white/5 rounded-lg"><i data-lucide="graduation-cap" class="w-4 h-4"></i></div>
-                                <span class="text-sm">Pendidikan</span>
-                            </div>
-                            <span class="text-sm font-medium text-white">S1 Pendidikan Mat.</span>
-                        </div>
-                    </div>
+                        <!-- Theme Toggle -->
+                        <button onclick="toggleTheme()" class="p-2 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-600 dark:text-yellow-400 transition-all border border-gray-200 dark:border-white/10">
+                            <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                            <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                        </button>
 
-                    <div class="mt-8 flex gap-3">
-                        <button class="flex-1 py-2.5 rounded-xl border border-white/10 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white transition-all">Edit Profil</button>
-                        <button class="flex-1 py-2.5 rounded-xl bg-white/10 text-sm font-medium text-white hover:bg-white/20 transition-all">Kontak</button>
-                    </div>
-                </div>
-
-                <!-- Kurikulum Info Card -->
-                <div class="glass-card rounded-2xl p-6">
-                    <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-                        <i data-lucide="book-open" class="w-4 h-4 text-sky-400"></i> Kurikulum
-                    </h3>
-                    <div class="p-3 rounded-xl bg-white/5 border border-white/5 mb-3">
-                        <p class="text-xs text-gray-400 mb-1">Kurikulum Saat Ini</p>
-                        <p class="text-sm font-medium text-white">Kurikulum Merdeka (2024)</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 rounded-md bg-violet-500/10 text-violet-300 text-xs border border-violet-500/20">Fase E</span>
-                        <span class="px-2 py-1 rounded-md bg-violet-500/10 text-violet-300 text-xs border border-violet-500/20">Fase F</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT COLUMN: Stats & Activities (8 Cols) -->
-            <div class="lg:col-span-8 space-y-6">
-                
-                <!-- Quick Stats Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <!-- Stat 1 -->
-                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-violet-500/20 flex items-center justify-center text-violet-400">
-                            <i data-lucide="users" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <p class="text-gray-400 text-xs font-medium uppercase tracking-wide">Total Siswa</p>
-                            <h3 class="text-2xl font-bold text-white">142</h3>
-                        </div>
-                    </div>
-                    <!-- Stat 2 -->
-                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-sky-500/20 flex items-center justify-center text-sky-400">
-                            <i data-lucide="layout-grid" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <p class="text-gray-400 text-xs font-medium uppercase tracking-wide">Kelas Ajar</p>
-                            <h3 class="text-2xl font-bold text-white">4 <span class="text-sm font-normal text-gray-500">Kelas</span></h3>
-                        </div>
-                    </div>
-                    <!-- Stat 3 -->
-                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                            <i data-lucide="clock" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <p class="text-gray-400 text-xs font-medium uppercase tracking-wide">Jam / Minggu</p>
-                            <h3 class="text-2xl font-bold text-white">24 <span class="text-sm font-normal text-gray-500">JP</span></h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- AI Generation Banner -->
-                <div class="glass-card p-6 rounded-3xl border-violet-500/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-violet-600/10 to-transparent"></div>
-                    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-xl shadow-lg shadow-violet-500/20">
-                                <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-white mb-1">Siapkan Materi Ajar Instan</h3>
-                                <p class="text-sm text-gray-400 max-w-md">Gunakan Didaktika AI untuk menganalisis kebutuhan siswa dan membuat RPP serta kuis yang dipersonalisasi.</p>
-                            </div>
-                        </div>
-                        <button class="btn-ai px-6 py-3 rounded-xl text-white font-semibold text-sm shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all flex items-center gap-2 whitespace-nowrap">
-                            <i data-lucide="wand-2" class="w-4 h-4"></i> Generate Materi
+                        <!-- Mobile Menu Button -->
+                        <button class="sm:hidden text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                            <i data-lucide="menu" class="w-6 h-6"></i>
                         </button>
                     </div>
                 </div>
+            </div>
+        </nav>
 
-                <!-- Daftar Kelas (Teaching Info) -->
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-bold text-white">Jadwal & Kelas</h3>
-                        <a href="#" class="text-sm text-violet-400 hover:text-violet-300 transition-colors">Lihat Semua</a>
+        <!-- Main Content -->
+        <main class="relative z-10 container mx-auto px-4 py-24 md:py-28 max-w-7xl">
+
+            <!-- Header Section -->
+            <header class="mb-10 animate-fade-up">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/20 text-violet-700 dark:text-violet-300 text-xs font-semibold tracking-wider uppercase mb-3">
+                            <i data-lucide="shield-check" class="w-3 h-3"></i>
+                            Portal Pengajar
+                        </div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">Profil & Data Guru</h1>
+                        <p class="text-gray-600 dark:text-gray-400 max-w-xl">Kelola informasi profil, jadwal mengajar, dan materi pembelajaran adaptif Anda di satu tempat.</p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Class Card 1 -->
-                        <a href="data-siswa.html" class="glass-card p-5 rounded-2xl hover:bg-white/5 transition-all group cursor-pointer">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 font-bold">X</div>
-                                    <div>
-                                        <h4 class="text-white font-semibold">X RPL 1</h4>
-                                        <p class="text-xs text-gray-400">Matematika Dasar</p>
-                                    </div>
-                                </div>
-                                <button class="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                                    <i data-lucide="more-horizontal" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            <div class="flex items-center justify-between text-sm pt-4 border-t border-white/5">
-                                <div class="flex items-center gap-2 text-gray-400">
-                                    <i data-lucide="users" class="w-4 h-4"></i> 36 Siswa
-                                </div>
-                                <div class="flex items-center gap-2 text-orange-300">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i> Senin, 08:00
-                                </div>
-                            </div>
-                        </a>
+                    <div class="flex gap-3">
+                        <button class="glass-card px-4 py-2.5 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-white flex items-center gap-2 bg-white/50 dark:bg-white/5">
+                            <i data-lucide="settings" class="w-4 h-4"></i>
+                            Pengaturan
+                        </button>
+                        <button onclick="window.location.reload()" class="glass-card px-4 py-2.5 rounded-xl text-sm font-medium text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2 bg-white/50 dark:bg-white/5 border-red-200 dark:border-red-900/30">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            Keluar
+                        </button>
+                    </div>
+                </div>
+            </header>
 
-                        <!-- Class Card 2 -->
-                        <div class="glass-card p-5 rounded-2xl hover:bg-white/5 transition-all group cursor-pointer">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">XI</div>
-                                    <div>
-                                        <h4 class="text-white font-semibold">XI TKJ 2</h4>
-                                        <p class="text-xs text-gray-400">Statistika</p>
-                                    </div>
-                                </div>
-                                <button class="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                                    <i data-lucide="more-horizontal" class="w-4 h-4"></i>
-                                </button>
+            <!-- Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-fade-up" style="animation-delay: 0.1s;">
+                
+                <!-- LEFT COLUMN: Profile Identity (4 Cols) -->
+                <div class="lg:col-span-4 space-y-6">
+                    <!-- Profile Card -->
+                    <div class="glass-card rounded-3xl p-6 text-center relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-violet-100 to-sky-100 dark:from-violet-900/50 dark:to-sky-900/50 transition-colors"></div>
+                        
+                        <div class="relative z-10 mt-8 mb-4">
+                            <div class="w-28 h-28 mx-auto rounded-full p-1 bg-gradient-to-br from-violet-500 to-sky-500 shadow-lg">
+                                <img id="display-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" 
+                                     class="w-full h-full rounded-full object-cover border-4 border-white dark:border-[#0B0F19]" 
+                                     alt="Foto Guru">
                             </div>
-                            <div class="flex items-center justify-between text-sm pt-4 border-t border-white/5">
-                                <div class="flex items-center gap-2 text-gray-400">
-                                    <i data-lucide="users" class="w-4 h-4"></i> 34 Siswa
+                        </div>
+                        
+                        <h2 id="profile-name" class="text-xl font-bold text-gray-900 dark:text-white">Sarah Wulandari, S.Pd.</h2>
+                        <p id="profile-role" class="text-violet-600 dark:text-violet-400 font-medium text-sm mb-4">Guru Matematika</p>
+                        
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-semibold border border-emerald-200 dark:border-emerald-500/20 mb-6">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Status: <span id="profile-status-text">Aktif</span>
+                        </div>
+
+                        <div class="space-y-4 text-left border-t border-gray-200 dark:border-white/5 pt-6">
+                            <div class="flex justify-between items-center group/item hover:bg-gray-50 dark:hover:bg-white/5 p-2 rounded-lg transition-colors">
+                                <div class="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                                    <div class="p-2 bg-gray-100 dark:bg-white/5 rounded-lg"><i data-lucide="id-card" class="w-4 h-4"></i></div>
+                                    <span class="text-sm">NIP</span>
                                 </div>
-                                <div class="flex items-center gap-2 text-blue-300">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i> Selasa, 10:00
+                                <span id="profile-nip" class="text-sm font-medium text-gray-900 dark:text-white">19850124 201001 2 003</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center group/item hover:bg-gray-50 dark:hover:bg-white/5 p-2 rounded-lg transition-colors">
+                                <div class="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                                    <div class="p-2 bg-gray-100 dark:bg-white/5 rounded-lg"><i data-lucide="mail" class="w-4 h-4"></i></div>
+                                    <span class="text-sm">Email</span>
                                 </div>
+                                <span id="profile-email" class="text-sm font-medium text-gray-900 dark:text-white">sarah.w@sekolah.id</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center group/item hover:bg-gray-50 dark:hover:bg-white/5 p-2 rounded-lg transition-colors">
+                                <div class="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                                    <div class="p-2 bg-gray-100 dark:bg-white/5 rounded-lg"><i data-lucide="graduation-cap" class="w-4 h-4"></i></div>
+                                    <span class="text-sm">Pendidikan</span>
+                                </div>
+                                <span id="profile-edu" class="text-sm font-medium text-gray-900 dark:text-white">S1 Pendidikan Mat.</span>
                             </div>
                         </div>
 
-                        <!-- Class Card 3 -->
-                        <div class="glass-card p-5 rounded-2xl hover:bg-white/5 transition-all group cursor-pointer">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 font-bold">XII</div>
-                                    <div>
-                                        <h4 class="text-white font-semibold">XII MM 1</h4>
-                                        <p class="text-xs text-gray-400">Kalkulus</p>
-                                    </div>
-                                </div>
-                                <button class="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                                    <i data-lucide="more-horizontal" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            <div class="flex items-center justify-between text-sm pt-4 border-t border-white/5">
-                                <div class="flex items-center gap-2 text-gray-400">
-                                    <i data-lucide="users" class="w-4 h-4"></i> 38 Siswa
-                                </div>
-                                <div class="flex items-center gap-2 text-pink-300">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i> Rabu, 07:30
-                                </div>
-                            </div>
+                        <div class="mt-8 flex gap-3">
+                            <button onclick="openEditProfile()" class="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-violet-600 dark:hover:text-white transition-all">Edit Profil</button>
+                            <button onclick="openContact()" class="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-white/10 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 transition-all">Kontak</button>
                         </div>
+                    </div>
 
-                        <!-- Add New Class -->
-                        <div class="glass-card p-5 rounded-2xl border border-dashed border-white/20 bg-transparent hover:bg-white/5 transition-all cursor-pointer flex flex-col items-center justify-center text-gray-400 hover:text-white min-h-[140px]">
-                            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-3">
-                                <i data-lucide="plus" class="w-6 h-6"></i>
-                            </div>
-                            <span class="text-sm font-medium">Tambah Kelas Baru</span>
+                    <!-- Kurikulum Info Card -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-gray-900 dark:text-white font-semibold mb-4 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-4 h-4 text-sky-500 dark:text-sky-400"></i> Kurikulum
+                        </h3>
+                        <div class="p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 mb-3">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kurikulum Saat Ini</p>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">Kurikulum Merdeka (2024)</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 rounded-md bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 text-xs border border-violet-200 dark:border-violet-500/20">Fase E</span>
+                            <span class="px-2 py-1 rounded-md bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 text-xs border border-violet-200 dark:border-violet-500/20">Fase F</span>
                         </div>
                     </div>
                 </div>
 
+                <!-- RIGHT COLUMN: Stats & Activities (8 Cols) -->
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <!-- Quick Stats Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Stat 1 -->
+                        <div class="glass-card p-5 rounded-2xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-violet-100 dark:bg-violet-500/20 flex items-center justify-center text-violet-600 dark:text-violet-400">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Total Siswa</p>
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">142</h3>
+                            </div>
+                        </div>
+                        <!-- Stat 2 -->
+                        <div class="glass-card p-5 rounded-2xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-sky-100 dark:bg-sky-500/20 flex items-center justify-center text-sky-600 dark:text-sky-400">
+                                <i data-lucide="layout-grid" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Kelas Ajar</p>
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">4 <span class="text-sm font-normal text-gray-500">Kelas</span></h3>
+                            </div>
+                        </div>
+                        <!-- Stat 3 -->
+                        <div class="glass-card p-5 rounded-2xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                                <i data-lucide="clock" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Jam / Minggu</p>
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">24 <span class="text-sm font-normal text-gray-500">JP</span></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Generation Banner -->
+                    <div class="glass-card p-6 rounded-3xl border-violet-200 dark:border-violet-500/30 relative overflow-hidden bg-gradient-to-r from-violet-50 to-white dark:from-transparent dark:to-transparent">
+                        <div class="absolute inset-0 bg-gradient-to-r from-violet-500/5 to-transparent dark:from-violet-600/10 dark:to-transparent"></div>
+                        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex items-start gap-4">
+                                <div class="p-3 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-xl shadow-lg shadow-violet-500/20">
+                                    <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Siapkan Materi Ajar Instan</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 max-w-md">Gunakan Didaktika AI untuk menganalisis kebutuhan siswa dan membuat RPP serta kuis yang dipersonalisasi.</p>
+                                </div>
+                            </div>
+                            <button class="btn-ai px-6 py-3 rounded-xl text-white font-semibold text-sm shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all flex items-center gap-2 whitespace-nowrap">
+                                <i data-lucide="wand-2" class="w-4 h-4"></i> Generate Materi
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Daftar Kelas (Teaching Info) -->
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Jadwal & Kelas</h3>
+                            <a href="#" class="text-sm text-violet-600 dark:text-violet-400 hover:text-violet-500 transition-colors">Lihat Semua</a>
+                        </div>
+                        
+                        <div id="class-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Class Card 1 -->
+                            <div onclick="openClass(event, 'data-siswa.html')" class="glass-card p-5 rounded-2xl hover:bg-white/50 dark:hover:bg-white/5 transition-all group cursor-pointer relative">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold">X</div>
+                                        <div>
+                                            <h4 class="text-gray-900 dark:text-white font-semibold class-name">X RPL 1</h4>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 class-subject">Matematika Dasar</p>
+                                        </div>
+                                    </div>
+                                    <!-- Edit Button (Isolated) -->
+                                    <button onclick="openEditClassModal(event, this)" class="p-2 rounded-lg bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-blue-900/20 text-gray-400 hover:text-blue-500 transition-colors z-50 border border-gray-200 dark:border-white/10 group/edit">
+                                        <i data-lucide="pencil" class="w-4 h-4 pointer-events-none"></i>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between text-sm pt-4 border-t border-gray-200 dark:border-white/5">
+                                    <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                                        <i data-lucide="users" class="w-4 h-4"></i> 36 Siswa
+                                    </div>
+                                    <div class="flex items-center gap-2 text-orange-600 dark:text-orange-300 class-time">
+                                        <i data-lucide="calendar" class="w-4 h-4"></i> Senin, 08:00
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Class Card 2 -->
+                            <div onclick="openClass(event, 'data-siswa.html')" class="glass-card p-5 rounded-2xl hover:bg-white/50 dark:hover:bg-white/5 transition-all group cursor-pointer relative">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">XI</div>
+                                        <div>
+                                            <h4 class="text-gray-900 dark:text-white font-semibold class-name">XI TKJ 2</h4>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 class-subject">Statistika</p>
+                                        </div>
+                                    </div>
+                                    <button onclick="openEditClassModal(event, this)" class="p-2 rounded-lg bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-blue-900/20 text-gray-400 hover:text-blue-500 transition-colors z-50 border border-gray-200 dark:border-white/10 group/edit">
+                                        <i data-lucide="pencil" class="w-4 h-4 pointer-events-none"></i>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between text-sm pt-4 border-t border-gray-200 dark:border-white/5">
+                                    <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                                        <i data-lucide="users" class="w-4 h-4"></i> 34 Siswa
+                                    </div>
+                                    <div class="flex items-center gap-2 text-blue-600 dark:text-blue-300 class-time">
+                                        <i data-lucide="calendar" class="w-4 h-4"></i> Selasa, 10:00
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Class Card 3 -->
+                            <div onclick="openClass(event, 'data-siswa.html')" class="glass-card p-5 rounded-2xl hover:bg-white/50 dark:hover:bg-white/5 transition-all group cursor-pointer relative">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-pink-100 dark:bg-pink-500/10 border border-pink-200 dark:border-pink-500/20 flex items-center justify-center text-pink-600 dark:text-pink-400 font-bold">XII</div>
+                                        <div>
+                                            <h4 class="text-gray-900 dark:text-white font-semibold class-name">XII MM 1</h4>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 class-subject">Kalkulus</p>
+                                        </div>
+                                    </div>
+                                    <button onclick="openEditClassModal(event, this)" class="p-2 rounded-lg bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-blue-900/20 text-gray-400 hover:text-blue-500 transition-colors z-50 border border-gray-200 dark:border-white/10 group/edit">
+                                        <i data-lucide="pencil" class="w-4 h-4 pointer-events-none"></i>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between text-sm pt-4 border-t border-gray-200 dark:border-white/5">
+                                    <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                                        <i data-lucide="users" class="w-4 h-4"></i> 38 Siswa
+                                    </div>
+                                    <div class="flex items-center gap-2 text-pink-600 dark:text-pink-300 class-time">
+                                        <i data-lucide="calendar" class="w-4 h-4"></i> Rabu, 07:30
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add New Class -->
+                            <div onclick="openAddClassModal()" class="glass-card p-5 rounded-2xl border border-dashed border-gray-300 dark:border-white/20 bg-transparent hover:bg-white/50 dark:hover:bg-white/5 transition-all cursor-pointer flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white min-h-[140px]">
+                                <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center mb-3">
+                                    <i data-lucide="plus" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-sm font-medium">Tambah Kelas Baru</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW SECTION: Rekan Pengajar (Directory) -->
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Rekan Pengajar</h3>
+                            <a href="#" class="text-sm text-violet-600 dark:text-violet-400 hover:text-violet-500 transition-colors">Lihat Semua</a>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Peer 1: Pak Budi -->
+                            <div class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:bg-white/50 dark:hover:bg-white/5 transition-all group">
+                                <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/10 flex items-center justify-center overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover" alt="Budi">
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-sm">Budi Santoso, M.Pd.</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Fisika</p>
+                                </div>
+                                <button onclick="openPeerProfile('budi')" class="p-2 rounded-lg bg-gray-100 dark:bg-white/5 text-violet-600 dark:text-violet-400 hover:bg-violet-100 dark:hover:bg-violet-500/20 transition-colors">
+                                    <i data-lucide="user" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Peer 2: Bu Siti -->
+                            <div class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:bg-white/50 dark:hover:bg-white/5 transition-all group">
+                                <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/10 flex items-center justify-center overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1598550874175-4d7112ee7f38?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover" alt="Siti">
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-sm">Siti Aminah, S.Pd.</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Biologi</p>
+                                </div>
+                                <button onclick="openPeerProfile('siti')" class="p-2 rounded-lg bg-gray-100 dark:bg-white/5 text-violet-600 dark:text-violet-400 hover:bg-violet-100 dark:hover:bg-violet-500/20 transition-colors">
+                                    <i data-lucide="user" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL EDIT PROFILE -->
+    <div id="edit-profile-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+        <div class="glass-card p-6 rounded-3xl w-full max-w-lg mx-4 bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 shadow-2xl animate-fade-up">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Edit Profil Guru</h3>
+                <button onclick="closeEditProfile()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500 dark:text-gray-400">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="saveProfile(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Nama Lengkap</label>
+                        <input type="text" id="input-name" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                    </div>
+                    <div class="col-span-1">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Mata Pelajaran</label>
+                        <input type="text" id="input-role" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                    </div>
+                    <div class="col-span-1">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">NIP</label>
+                        <input type="text" id="input-nip" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Email Sekolah</label>
+                        <input type="email" id="input-email" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Pendidikan Terakhir</label>
+                        <input type="text" id="input-edu" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                    </div>
+                     <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Status Kepegawaian</label>
+                        <select id="input-status" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                            <option value="Aktif">Aktif Mengajar</option>
+                            <option value="Cuti">Cuti</option>
+                            <option value="Non-Aktif">Non-Aktif</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 pt-4 border-t border-gray-200 dark:border-white/5 mt-4">
+                    <button type="button" onclick="closeEditProfile()" class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 font-medium text-sm transition-all">Batal</button>
+                    <button type="submit" class="flex-1 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-sm shadow-lg shadow-violet-500/20 transition-all">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL CONTACT -->
+    <div id="contact-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+        <div class="glass-card p-8 rounded-3xl w-full max-w-sm mx-4 bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 shadow-2xl animate-fade-up text-center">
+            
+            <div class="w-16 h-16 bg-violet-100 dark:bg-violet-500/20 rounded-full mx-auto flex items-center justify-center mb-4">
+                <i data-lucide="phone" class="w-8 h-8 text-violet-600 dark:text-violet-400"></i>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Hubungi Pengajar</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">Pilih metode komunikasi di bawah ini</p>
+            
+            <div class="space-y-3">
+                <a href="#" class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-white/5 transition-all group">
+                    <div class="p-2 bg-green-500/10 rounded-lg text-green-500"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
+                    <div class="text-left">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">WhatsApp</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white">+62 812-3456-7890</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-white/5 transition-all group">
+                    <div class="p-2 bg-blue-500/10 rounded-lg text-blue-500"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                    <div class="text-left">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Email Resmi</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white">sarah.w@sekolah.id</p>
+                    </div>
+                </a>
+            </div>
+
+            <button onclick="closeContact()" class="mt-6 w-full py-3 rounded-xl border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 font-medium text-sm transition-all">Tutup</button>
+        </div>
+    </div>
+
+    <!-- MODAL ADD CLASS -->
+    <div id="add-class-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+        <div class="glass-card p-6 rounded-3xl w-full max-w-lg mx-4 bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 shadow-2xl animate-fade-up">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Tambah Kelas Baru</h3>
+                <button onclick="closeAddClassModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500 dark:text-gray-400">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="saveClass(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Nama Kelas</label>
+                        <input type="text" id="new-class-name" placeholder="Contoh: X DKV 1" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm" required>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Mata Pelajaran</label>
+                        <input type="text" id="new-class-subject" placeholder="Contoh: Desain Grafis" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm" required>
+                    </div>
+                    <div class="col-span-1">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Jumlah Siswa</label>
+                        <input type="number" id="new-class-students" placeholder="0" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm" required>
+                    </div>
+                    <div class="col-span-1">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Jadwal</label>
+                        <input type="text" id="new-class-time" placeholder="Senin, 08:00" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm" required>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 pt-4 border-t border-gray-200 dark:border-white/5 mt-4">
+                    <button type="button" onclick="closeAddClassModal()" class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 font-medium text-sm transition-all">Batal</button>
+                    <button type="submit" class="flex-1 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-sm shadow-lg shadow-violet-500/20 transition-all">Tambah Kelas</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT CLASS (NEW) -->
+    <div id="edit-class-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+        <div class="glass-card p-6 rounded-3xl w-full max-w-lg mx-4 bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 shadow-2xl animate-fade-up">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Edit Kelas</h3>
+                <button onclick="closeEditClassModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500 dark:text-gray-400">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="saveClassChanges(event)" class="space-y-4">
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Mata Pelajaran</label>
+                        <input type="text" id="edit-class-subject" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Jadwal (Hari & Jam)</label>
+                        <input type="text" id="edit-class-time" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:border-violet-500 text-sm">
+                    </div>
+                </div>
+
+                <div class="flex gap-3 pt-4 border-t border-gray-200 dark:border-white/5 mt-4">
+                    <button type="button" onclick="closeEditClassModal()" class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 font-medium text-sm transition-all">Batal</button>
+                    <button type="submit" class="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-500/20 transition-all">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PEER PROFILE (READ ONLY) -->
+    <div id="peer-profile-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+        <div class="glass-card p-0 rounded-3xl w-full max-w-md mx-4 bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 shadow-2xl animate-fade-up overflow-hidden">
+            <!-- Header Background -->
+            <div class="h-24 bg-gradient-to-r from-sky-400 to-indigo-500 relative">
+                <button onclick="closePeerProfile()" class="absolute top-4 right-4 p-2 rounded-full bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            
+            <div class="px-6 pb-6 relative">
+                <!-- Avatar -->
+                <div class="relative -mt-10 mb-4 flex justify-between items-end">
+                    <div class="w-20 h-20 rounded-full border-4 border-white dark:border-[#0B0F19] bg-white overflow-hidden shadow-lg">
+                        <img id="peer-img" src="" class="w-full h-full object-cover" alt="Peer">
+                    </div>
+                    <div class="mb-1">
+                        <span class="px-3 py-1 bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 text-xs font-bold rounded-full border border-sky-200 dark:border-sky-500/20">
+                            Pengajar Aktif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Info -->
+                <div class="mb-6">
+                    <h3 id="peer-name" class="text-xl font-bold text-gray-900 dark:text-white"></h3>
+                    <p id="peer-role" class="text-sky-600 dark:text-sky-400 text-sm font-medium"></p>
+                </div>
+
+                <!-- Detail Grid -->
+                <div class="grid grid-cols-1 gap-3 text-sm">
+                    <div class="p-3 bg-gray-50 dark:bg-white/5 rounded-xl flex items-center gap-3">
+                        <div class="p-2 bg-white dark:bg-white/10 rounded-lg text-gray-500 dark:text-gray-400 shadow-sm">
+                            <i data-lucide="id-card" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">NIP</p>
+                            <p id="peer-nip" class="font-semibold text-gray-900 dark:text-white"></p>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-gray-50 dark:bg-white/5 rounded-xl flex items-center gap-3">
+                        <div class="p-2 bg-white dark:bg-white/10 rounded-lg text-gray-500 dark:text-gray-400 shadow-sm">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Email Sekolah</p>
+                            <p id="peer-email" class="font-semibold text-gray-900 dark:text-white"></p>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-gray-50 dark:bg-white/5 rounded-xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="layout-grid" class="w-4 h-4 text-gray-500 dark:text-gray-400"></i>
+                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Kelas yang Diampu</span>
+                        </div>
+                        <div id="peer-classes" class="grid grid-cols-1 gap-2">
+                            <!-- List injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="mt-6">
+                    <button class="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4"></i> Kirim Pesan
+                    </button>
+                </div>
             </div>
         </div>
-
-    </main>
+    </div>
 
     <script>
         lucide.createIcons();
+
+        // Theme Toggle Logic
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        // Login Logic
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const message = document.getElementById('login-message');
+            const overlay = document.getElementById('login-overlay');
+            const app = document.getElementById('main-app');
+
+            if (username === 'admin' && password === 'admin') {
+                message.classList.remove('opacity-0');
+                message.innerText = "Login Berhasil!";
+                message.classList.remove('text-red-500', 'dark:text-red-400');
+                message.classList.add('text-emerald-500', 'dark:text-emerald-400');
+
+                setTimeout(() => {
+                    overlay.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+                    app.classList.remove('blur-sm', 'pointer-events-none');
+                }, 800);
+            } else {
+                message.classList.remove('opacity-0');
+                message.innerText = "Username atau Password salah!";
+                const form = document.querySelector('form');
+                form.classList.add('translate-x-1');
+                setTimeout(() => form.classList.remove('translate-x-1'), 100);
+                setTimeout(() => form.classList.add('-translate-x-1'), 100);
+                setTimeout(() => form.classList.remove('-translate-x-1'), 200);
+            }
+        }
+
+        // --- EDIT PROFILE LOGIC ---
+        const editModal = document.getElementById('edit-profile-modal');
+        const contactModal = document.getElementById('contact-modal');
+
+        function openEditProfile() {
+            document.getElementById('input-name').value = document.getElementById('profile-name').innerText;
+            document.getElementById('input-role').value = document.getElementById('profile-role').innerText;
+            document.getElementById('input-nip').value = document.getElementById('profile-nip').innerText;
+            document.getElementById('input-email').value = document.getElementById('profile-email').innerText;
+            document.getElementById('input-edu').value = document.getElementById('profile-edu').innerText;
+            
+            const currentStatus = document.getElementById('profile-status-text').innerText;
+            document.getElementById('input-status').value = currentStatus;
+
+            editModal.classList.remove('hidden');
+        }
+
+        function closeEditProfile() {
+            editModal.classList.add('hidden');
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            document.getElementById('profile-name').innerText = document.getElementById('input-name').value;
+            document.getElementById('profile-role').innerText = document.getElementById('input-role').value;
+            document.getElementById('profile-nip').innerText = document.getElementById('input-nip').value;
+            document.getElementById('profile-email').innerText = document.getElementById('input-email').value;
+            document.getElementById('profile-edu').innerText = document.getElementById('input-edu').value;
+            
+            const newStatus = document.getElementById('input-status').value;
+            document.getElementById('profile-status-text').innerText = newStatus;
+
+            closeEditProfile();
+            alert("Profil berhasil diperbarui!");
+        }
+
+        // --- CONTACT LOGIC ---
+        function openContact() {
+            contactModal.classList.remove('hidden');
+        }
+
+        function closeContact() {
+            contactModal.classList.add('hidden');
+        }
+
+        // --- PEER PROFILE LOGIC (UPDATED WITH TIME) ---
+        const peers = {
+            'budi': {
+                name: 'Budi Santoso, M.Pd.',
+                role: 'Guru Fisika',
+                nip: '19820512 200801 1 005',
+                email: 'budi.s@sekolah.id',
+                img: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?q=80&w=200&auto=format&fit=crop',
+                classes: [
+                    { name: 'X IPA 1', time: 'Senin, 08:00' },
+                    { name: 'X IPA 2', time: 'Selasa, 10:00' },
+                    { name: 'XI IPA 1', time: 'Rabu, 09:30' }
+                ]
+            },
+            'siti': {
+                name: 'Siti Aminah, S.Pd.',
+                role: 'Guru Biologi',
+                nip: '19900315 201502 2 009',
+                email: 'siti.a@sekolah.id',
+                // Updated Image
+                img: 'https://images.unsplash.com/photo-1598550874175-4d7112ee7f38?q=80&w=200&auto=format&fit=crop',
+                classes: [
+                    { name: 'X IPA 3', time: 'Selasa, 08:00' },
+                    { name: 'XI IPA 2', time: 'Kamis, 13:00' },
+                    { name: 'XII IPA 1', time: 'Jumat, 09:00' }
+                ]
+            }
+        };
+
+        function openPeerProfile(id) {
+            const peer = peers[id];
+            if (!peer) return;
+
+            document.getElementById('peer-img').src = peer.img;
+            document.getElementById('peer-name').innerText = peer.name;
+            document.getElementById('peer-role').innerText = peer.role;
+            document.getElementById('peer-nip').innerText = peer.nip;
+            document.getElementById('peer-email').innerText = peer.email;
+
+            const classesContainer = document.getElementById('peer-classes');
+            classesContainer.innerHTML = ''; 
+            
+            peer.classes.forEach(cls => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-2 rounded bg-gray-100 dark:bg-white/10 border border-gray-200 dark:border-white/10 w-full';
+                div.innerHTML = `
+                    <span class="text-xs font-semibold text-gray-700 dark:text-gray-200">${cls.name}</span>
+                    <span class="text-[10px] text-gray-500 dark:text-gray-400 bg-white dark:bg-white/5 px-1.5 py-0.5 rounded border border-gray-200 dark:border-white/5">${cls.time}</span>
+                `;
+                classesContainer.appendChild(div);
+            });
+
+            document.getElementById('peer-profile-modal').classList.remove('hidden');
+        }
+
+        function closePeerProfile() {
+            document.getElementById('peer-profile-modal').classList.add('hidden');
+        }
+
+        // --- NAVIGATION LOGIC ---
+        function openClass(event, url) {
+            // Check if the click target or its parent is the edit button
+            if (event.target.closest('.group\\/edit')) {
+                return;
+            }
+            alert("Simulasi: Berpindah ke halaman detail kelas (fitur demo)");
+        }
+
+        // --- ADD CLASS LOGIC ---
+        const addClassModal = document.getElementById('add-class-modal');
+
+        function openAddClassModal() {
+            addClassModal.classList.remove('hidden');
+        }
+
+        function closeAddClassModal() {
+            addClassModal.classList.add('hidden');
+        }
+
+        function saveClass(e) {
+            e.preventDefault();
+            const name = document.getElementById('new-class-name').value;
+            const subject = document.getElementById('new-class-subject').value;
+            const students = document.getElementById('new-class-students').value;
+            const time = document.getElementById('new-class-time').value;
+
+            // Updated Template with DIV onclick, Edit Button
+            const newCardHTML = `
+                <div onclick="openClass(event, 'data-siswa.html')" class="glass-card p-5 rounded-2xl hover:bg-white/50 dark:hover:bg-white/5 transition-all group cursor-pointer animate-fade-up relative">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/20 flex items-center justify-center text-violet-600 dark:text-violet-400 font-bold">${name.split(' ')[0]}</div>
+                            <div>
+                                <h4 class="text-gray-900 dark:text-white font-semibold class-name">${name}</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 class-subject">${subject}</p>
+                            </div>
+                        </div>
+                        <button onclick="openEditClassModal(event, this)" class="p-2 rounded-lg bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-blue-900/20 text-gray-400 hover:text-blue-500 transition-colors z-50 border border-gray-200 dark:border-white/10 group/edit">
+                            <i data-lucide="pencil" class="w-4 h-4 pointer-events-none"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between text-sm pt-4 border-t border-gray-200 dark:border-white/5">
+                        <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                            <i data-lucide="users" class="w-4 h-4"></i> ${students} Siswa
+                        </div>
+                        <div class="flex items-center gap-2 text-violet-600 dark:text-violet-300 class-time">
+                            <i data-lucide="calendar" class="w-4 h-4"></i> ${time}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const grid = document.getElementById('class-grid');
+            const addButton = grid.lastElementChild;
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = newCardHTML;
+            grid.insertBefore(wrapper.firstElementChild, addButton);
+
+            e.target.reset();
+            closeAddClassModal();
+            lucide.createIcons();
+        }
+
+        // --- EDIT CLASS LOGIC (NEW FEATURE) ---
+        let currentEditingCard = null;
+        const editClassModal = document.getElementById('edit-class-modal');
+
+        function openEditClassModal(event, button) {
+            // STOP propagation so clicking edit button doesn't trigger card navigation
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+            }
+            
+            // Identify the card wrapper
+            const card = button.closest('.glass-card');
+            currentEditingCard = card;
+
+            // Extract existing data from card DOM
+            const subject = card.querySelector('.class-subject').innerText;
+            const time = card.querySelector('.class-time').innerText.trim();
+
+            // Populate Modal Fields
+            document.getElementById('edit-class-subject').value = subject;
+            document.getElementById('edit-class-time').value = time;
+
+            // Show Modal
+            editClassModal.classList.remove('hidden');
+        }
+
+        function closeEditClassModal() {
+            editClassModal.classList.add('hidden');
+            currentEditingCard = null;
+        }
+
+        function saveClassChanges(e) {
+            e.preventDefault();
+            if (!currentEditingCard) return;
+
+            // Get new values
+            const newSubject = document.getElementById('edit-class-subject').value;
+            const newTime = document.getElementById('edit-class-time').value;
+
+            // Update DOM
+            currentEditingCard.querySelector('.class-subject').innerText = newSubject;
+            
+            // Re-render time with icon to preserve structure
+            const timeContainer = currentEditingCard.querySelector('.class-time');
+            // We keep the icon element if it exists or recreate it
+            timeContainer.innerHTML = `<i data-lucide="calendar" class="w-4 h-4"></i> ${newTime}`;
+            
+            // Re-init icon
+            lucide.createIcons();
+
+            closeEditClassModal();
+            alert("Data kelas berhasil diperbarui!");
+        }
     </script>
 </body>
 </html>

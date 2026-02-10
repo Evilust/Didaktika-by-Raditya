@@ -1,229 +1,389 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html class="scroll-smooth" lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dukungan Pengguna - Didaktika AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang & Dukungan — Didaktika AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              bg: '#F8FAFC',      
+              primary: '#2563EB', 
+              secondary: '#4F46E5', 
+              accent: '#06B6D4',  
+            }
+          },
+          animation: {
+            'pulse-soft': 'pulse-soft 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-slower': 'float 12s ease-in-out infinite reverse',
+            'blob': 'blob 7s infinite',
+          },
+          keyframes: {
+            'pulse-soft': {
+              '0%, 100%': { opacity: 0.8 },
+              '50%': { opacity: 0.5 },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            blob: {
+              "0%": { transform: "translate(0px, 0px) scale(1)" },
+              "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+              "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+              "100%": { transform: "translate(0px, 0px) scale(1)" }
+            }
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    /* CSS Variables untuk tema Light/Dark */
+    :root {
+      --grid-color: rgba(148, 163, 184, 0.15);
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --glass-shadow: rgba(31, 38, 135, 0.08);
+    }
+
+    .dark {
+      --grid-color: rgba(255, 255, 255, 0.08);
+      --glass-bg: rgba(15, 23, 42, 0.9); 
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --glass-shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Background Grid */
+    .bg-grid-slate {
+      background-size: 40px 40px;
+      background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                        linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, transparent, black, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 10%, black 90%, transparent); 
+    }
+
+    /* Glass Card Style */
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 8px 32px 0 var(--glass-shadow);
+        transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-2px);
+        border-color: #3B82F6;
+    }
+    
+    .dark .glass-card:hover {
+        border-color: #60A5FA;
+    }
+
+    /* Gradient Text */
+    .text-gradient {
+      background: linear-gradient(to right, #2563EB, #7C3AED);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .dark .text-gradient {
+      background: linear-gradient(to right, #60A5FA, #A78BFA);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* Side Decoration Gradient Masks */
+    .mask-fade-right { -webkit-mask-image: linear-gradient(to right, black, transparent); mask-image: linear-gradient(to right, black, transparent); }
+    .mask-fade-left { -webkit-mask-image: linear-gradient(to left, black, transparent); mask-image: linear-gradient(to left, black, transparent); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-900 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-cyan-900 dark:selection:text-cyan-100 transition-colors duration-300 relative">
+
+  <!-- ========================================== -->
+  <!-- WIDESCREEN SIDE FILLERS                  -->
+  <!-- ========================================== -->
+  
+  <!-- Left Side: Support Icons -->
+  <div class="fixed left-0 top-0 bottom-0 w-64 hidden xl:flex flex-col justify-center items-center pointer-events-none z-0 overflow-hidden opacity-30 dark:opacity-20 mask-fade-right">
+      <div class="absolute top-[15%] left-10 text-slate-400 dark:text-slate-600 animate-float-slow">
+          <i data-lucide="life-buoy" class="w-16 h-16 opacity-20"></i>
+      </div>
+      <div class="absolute bottom-[20%] left-16 text-blue-400 dark:text-blue-800 animate-float-slower">
+          <i data-lucide="message-circle-question" class="w-20 h-20 opacity-20"></i>
+      </div>
+  </div>
+
+  <!-- Right Side: Tech Icons -->
+  <div class="fixed right-0 top-0 bottom-0 w-64 hidden xl:flex flex-col justify-center items-center pointer-events-none z-0 overflow-hidden opacity-30 dark:opacity-20 mask-fade-left">
+      <div class="absolute top-[20%] right-12 text-cyan-400 dark:text-cyan-800 animate-float-slower">
+          <i data-lucide="shield-check" class="w-16 h-16 opacity-20"></i>
+      </div>
+      <div class="absolute bottom-[30%] right-8 text-emerald-400 dark:text-emerald-800 animate-float-slow">
+          <i data-lucide="cpu" class="w-20 h-20 opacity-20"></i>
+      </div>
+  </div>
+
+  <!-- CENTER BACKGROUND GLOW -->
+  <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+    <div class="absolute inset-0 bg-grid-slate transition-colors duration-300 opacity-60"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-blue-400/10 dark:bg-blue-600/10 rounded-full blur-[120px] animate-pulse-soft"></div>
+    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-400/10 dark:bg-purple-600/10 rounded-full blur-[100px] animate-blob"></div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-b border-white/50 dark:border-white/10 transition-all duration-300 shadow-sm">
+    <nav class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="relative h-9 w-9">
+            <div class="absolute inset-0 bg-gradient-to-tr from-blue-700 to-cyan-600 rounded-lg transform rotate-6 transition-transform group-hover:rotate-12"></div>
+            <div class="absolute inset-0 bg-white dark:bg-slate-900 rounded-lg border-2 border-transparent flex items-center justify-center text-blue-700 dark:text-cyan-400 font-bold z-10">D</div>
+        </div>
+        <span class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Didaktika<span class="text-blue-700 dark:text-cyan-400">AI</span></span>
+      </a>
+      
+      <div class="flex items-center gap-6">
+        <ul class="hidden md:flex items-center gap-8 text-sm font-bold text-slate-700 dark:text-slate-200">
+            <li><a href="fitur.html" class="hover:text-blue-700 dark:hover:text-cyan-400 transition-colors duration-300">Fitur</a></li>
+            <li><a href="cara-kerja.html" class="hover:text-blue-700 dark:hover:text-cyan-400 transition-colors duration-300">Cara kerja</a></li>
+            <li><a href="Tentang.html" class="text-blue-700 dark:text-cyan-400 transition-colors duration-300">Tentang</a></li>
+        </ul>
+
+        <button id="theme-toggle" class="p-2 rounded-full text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors focus:outline-none ring-1 ring-slate-200 dark:ring-slate-700">
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd"></path></svg>
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        </button>
         
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #030712; /* Gray 950 */
-            color: #F9FAFB;
-            overflow-x: hidden;
-        }
+        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-600 to-cyan-600 p-[1px] cursor-pointer hidden sm:block">
+            <a href="data-siswa.html" class="h-full w-full rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-xs font-bold text-blue-700 dark:text-cyan-400 hover:bg-slate-100 transition-colors">
+                SW
+            </a>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-        /* Glassmorphism Card Style */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
+  <main class="relative z-10 pt-24 pb-20 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
 
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(6, 182, 212, 0.15);
-        }
+      <!-- Header Section -->
+      <header class="text-center mb-20" data-aos="fade-down">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 dark:bg-slate-800/50 border border-blue-200 dark:border-slate-700 text-blue-700 dark:text-cyan-400 text-xs font-bold mb-6 shadow-sm backdrop-blur-sm">
+              <i data-lucide="life-buoy" class="w-4 h-4"></i>
+              Pusat Bantuan
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 text-slate-900 dark:text-white">
+              Dukungan <span class="text-gradient">Pengguna</span>
+          </h1>
+          
+          <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              Panduan lengkap untuk guru dalam memaksimalkan fitur platform, memahami batasan AI, dan menjaga keamanan data siswa.
+          </p>
+      </header>
 
-        /* Warning/Important Card Variant */
-        .glass-card-warning {
-            background: rgba(245, 158, 11, 0.05);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-        
-        /* Gradient Text */
-        .text-gradient {
-            background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+      <!-- General Help Section (Hero Card) -->
+      <section class="mb-16" data-aos="fade-up">
+          <div class="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden group">
+              <!-- Decorative Icon Background -->
+              <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                  <i data-lucide="bot" class="w-64 h-64 text-blue-500 dark:text-cyan-400"></i>
+              </div>
 
-        /* Animations */
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-        .animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cyan: { 450: '#00a3cc' },
-                        violet: { 450: '#7c3aed' }
-                    }
-                }
+              <div class="relative z-10 flex flex-col md:flex-row gap-10 items-start">
+                  <div class="flex-1">
+                      <div class="flex items-center gap-3 mb-4 text-blue-600 dark:text-cyan-400">
+                          <div class="p-2 bg-blue-100 dark:bg-cyan-500/20 rounded-lg">
+                              <i data-lucide="sparkles" class="w-6 h-6"></i>
+                          </div>
+                          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Tentang Platform Ini</h2>
+                      </div>
+                      <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6 text-lg">
+                          Platform ini dirancang khusus sebagai asisten cerdas bagi guru. Kami menyediakan fitur berbasis AI untuk mempercepat administrasi, merancang materi kreatif, dan memberikan wawasan perkembangan siswa secara <i>real-time</i>.
+                      </p>
+                  </div>
+
+                  <!-- Important Notice Box -->
+                  <div class="flex-1 w-full">
+                      <div class="rounded-2xl p-6 backdrop-blur-md bg-amber-50 border border-amber-200 dark:bg-amber-900/20 dark:border-amber-500/30">
+                          <div class="flex items-start gap-4">
+                              <div class="p-2 bg-amber-100 dark:bg-amber-500/20 rounded-lg text-amber-600 dark:text-amber-400 shrink-0">
+                                  <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                              </div>
+                              <div>
+                                  <h3 class="text-lg font-bold text-amber-800 dark:text-amber-200 mb-2">Penting untuk Diingat</h3>
+                                  <p class="text-sm text-amber-700 dark:text-amber-100/80 leading-relaxed">
+                                      AI adalah alat bantu, bukan pengganti. Keputusan akhir pembelajaran tetap di tangan Anda sebagai pendidik profesional. Platform ini mendukung kebijaksanaan guru, tidak menggantikannya.
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <!-- FAQ Section Grid -->
+      <section class="mb-20">
+          <h2 class="text-3xl font-bold text-center mb-10 flex items-center justify-center gap-3 text-slate-900 dark:text-white" data-aos="fade-up">
+              <span class="w-8 h-1 bg-gradient-to-r from-transparent to-blue-500 dark:to-cyan-500 rounded-full"></span>
+              Pertanyaan Umum (FAQ)
+              <span class="w-8 h-1 bg-gradient-to-l from-transparent to-indigo-500 dark:to-purple-500 rounded-full"></span>
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- FAQ Item 1 -->
+              <div class="glass-card rounded-2xl p-6 md:p-8 group hover:shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                  <div class="w-12 h-12 bg-blue-100 dark:bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 text-blue-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                      <i data-lucide="users" class="w-6 h-6"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+                      Apakah platform ini menggantikan peran guru?
+                  </h3>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                      <span class="font-bold text-slate-900 dark:text-white">Sama sekali tidak.</span> Guru adalah jantung pendidikan. Platform ini hanya menangani tugas repetitif dan analisis data, sehingga guru memiliki lebih banyak waktu untuk membimbing siswa secara personal.
+                  </p>
+              </div>
+
+              <!-- FAQ Item 2 -->
+              <div class="glass-card rounded-2xl p-6 md:p-8 group hover:shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                  <div class="w-12 h-12 bg-indigo-100 dark:bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 text-indigo-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
+                      <i data-lucide="cpu" class="w-6 h-6"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-purple-400 transition-colors">
+                      Apakah ini AI sungguhan atau demo?
+                  </h3>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                      Kami menggunakan teknologi <span class="font-bold text-slate-900 dark:text-white">Generative AI sesungguhnya</span> yang dilatih dengan data pendidikan. Namun, seperti semua teknologi, hasil AI memerlukan verifikasi manusia untuk memastikan konteks yang tepat.
+                  </p>
+              </div>
+
+              <!-- FAQ Item 3 -->
+              <div class="glass-card rounded-2xl p-6 md:p-8 group hover:shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                  <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                      <i data-lucide="shield-check" class="w-6 h-6"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                      Bagaimana keamanan data siswa?
+                  </h3>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                      Prioritas #1 kami. Data dienkripsi standar industri dan hanya dapat diakses oleh guru yang berwenang. Kami <span class="font-bold text-slate-900 dark:text-white">tidak pernah</span> menjual data siswa ke pihak ketiga.
+                  </p>
+              </div>
+
+              <!-- FAQ Item 4 -->
+              <div class="glass-card rounded-2xl p-6 md:p-8 group hover:shadow-lg" data-aos="fade-up" data-aos-delay="400">
+                  <div class="w-12 h-12 bg-rose-100 dark:bg-rose-500/10 rounded-xl flex items-center justify-center mb-6 text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform">
+                      <i data-lucide="gavel" class="w-6 h-6"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+                      Siapa penanggung jawab keputusan?
+                  </h3>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                      <span class="font-bold text-slate-900 dark:text-white">Anda, sang Guru.</span> AI memberikan rekomendasi berbasis data, tetapi Anda memiliki kendali penuh untuk menerima, menolak, atau memodifikasi saran tersebut.
+                  </p>
+              </div>
+
+          </div>
+      </section>
+
+      <!-- Contact CTA -->
+      <section class="max-w-3xl mx-auto" data-aos="zoom-in">
+          <div class="glass-card rounded-3xl p-8 md:p-12 text-center relative overflow-hidden bg-gradient-to-b from-blue-50 to-white dark:from-slate-800 dark:to-slate-900">
+              <div class="relative z-10">
+                  <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">Masih Membutuhkan Bantuan?</h2>
+                  <p class="text-slate-600 dark:text-slate-300 mb-8 text-lg">Tim dukungan kami siap membantu Anda memahami platform lebih dalam.</p>
+                  
+                  <a href="#" class="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-700 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-blue-600 dark:hover:from-cyan-400 dark:hover:to-blue-500 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                      <i data-lucide="mail" class="w-5 h-5"></i>
+                      Hubungi Kami
+                  </a>
+              </div>
+          </div>
+      </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden mt-12 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div class="text-center">
+        <p class="text-sm font-medium text-slate-700 dark:text-slate-400">
+            Hanya demo — Antarmuka konseptual untuk menggambarkan wawasan AI dalam pendidikan inklusif.
+        </p>
+        <div class="mt-4 text-xs font-bold text-slate-600 dark:text-slate-600">
+            © 2026 DidaktikaAI. Hak cipta dilindungi.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Init Lucide Icons
+    lucide.createIcons();
+
+    // Init AOS
+    AOS.init({
+        once: true,
+        duration: 800,
+        easing: 'ease-out-cubic',
+    });
+
+    // Dark Mode Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcon.classList.remove('hidden');
+        document.documentElement.classList.add('dark');
+    } else {
+        themeToggleDarkIcon.classList.remove('hidden');
+        document.documentElement.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        if (localStorage.getItem('color-theme')) {
+            if (localStorage.getItem('color-theme') === 'light') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            }
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
             }
         }
-    </script>
-</head>
-<body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
-
-    <!-- Background Elements (Glows & Noise) -->
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-40 right-0 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow"></div>
-        <div class="absolute bottom-0 -left-40 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow" style="animation-delay: 2s;"></div>
-        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
-    </div>
-
-    <div class="relative z-10 container mx-auto px-4 py-20 md:py-28 max-w-6xl">
-
-        <!-- Header Section -->
-        <header class="text-center mb-20">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-cyan-300 text-xs font-semibold tracking-wider uppercase mb-6 backdrop-blur-sm">
-                <i data-lucide="life-buoy" class="w-3 h-3"></i>
-                Pusat Bantuan
-            </div>
-            
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
-                Dukungan <span class="text-gradient">Pengguna</span>
-            </h1>
-            
-            <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                Panduan lengkap untuk guru dalam memaksimalkan fitur platform, memahami batasan AI, dan menjaga keamanan data siswa.
-            </p>
-        </header>
-
-        <!-- General Help Section (Hero Card) -->
-        <section class="mb-16">
-            <div class="glass-card rounded-3xl p-8 md:p-12 border border-white/10 relative overflow-hidden group">
-                <!-- Decorative Icon Background -->
-                <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-                    <i data-lucide="bot" class="w-64 h-64 text-cyan-400"></i>
-                </div>
-
-                <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-4 text-cyan-400">
-                            <i data-lucide="sparkles" class="w-6 h-6"></i>
-                            <h2 class="text-2xl font-bold text-white">Tentang Platform Ini</h2>
-                        </div>
-                        <p class="text-gray-300 leading-relaxed mb-6">
-                            Platform ini dirancang khusus sebagai asisten cerdas bagi guru. Kami menyediakan fitur berbasis AI untuk mempercepat administrasi, merancang materi kreatif, dan memberikan wawasan perkembangan siswa secara <i>real-time</i>.
-                        </p>
-                    </div>
-
-                    <!-- Important Notice Box -->
-                    <div class="flex-1 w-full">
-                        <div class="glass-card-warning rounded-2xl p-6 backdrop-blur-md">
-                            <div class="flex items-start gap-4">
-                                <div class="p-2 bg-amber-500/20 rounded-lg text-amber-400 shrink-0">
-                                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-amber-200 mb-2">Penting untuk Diingat</h3>
-                                    <p class="text-sm text-amber-100/80 leading-relaxed">
-                                        AI adalah alat bantu, bukan pengganti. Keputusan akhir pembelajaran tetap di tangan Anda sebagai pendidik profesional. Platform ini mendukung kebijaksanaan guru, tidak menggantikannya.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section Grid -->
-        <section class="mb-20">
-            <h2 class="text-3xl font-bold text-center mb-10 flex items-center justify-center gap-3">
-                <span class="w-8 h-1 bg-gradient-to-r from-transparent to-cyan-500 rounded-full"></span>
-                Pertanyaan Umum (FAQ)
-                <span class="w-8 h-1 bg-gradient-to-l from-transparent to-violet-500 rounded-full"></span>
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <!-- FAQ Item 1 -->
-                <div class="glass-card rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-cyan-500/30 group">
-                    <div class="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 text-cyan-400 group-hover:scale-110 transition-transform">
-                        <i data-lucide="users" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
-                        Apakah platform ini menggantikan peran guru?
-                    </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        <span class="text-white font-semibold">Sama sekali tidak.</span> Guru adalah jantung pendidikan. Platform ini hanya menangani tugas repetitif dan analisis data, sehingga guru memiliki lebih banyak waktu untuk membimbing siswa secara personal dan kreatif.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="glass-card rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-violet-500/30 group">
-                    <div class="w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center mb-6 text-violet-400 group-hover:scale-110 transition-transform">
-                        <i data-lucide="cpu" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-violet-300 transition-colors">
-                        Apakah ini AI sungguhan atau demo?
-                    </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Kami menggunakan teknologi <span class="text-white font-semibold">Generative AI sesungguhnya</span> yang dilatih dengan data pendidikan. Namun, seperti semua teknologi, hasil AI memerlukan verifikasi manusia untuk memastikan konteks yang tepat.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="glass-card rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-emerald-500/30 group">
-                    <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6 text-emerald-400 group-hover:scale-110 transition-transform">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">
-                        Bagaimana keamanan data siswa?
-                    </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Prioritas #1 kami. Data dienkripsi standar industri dan hanya dapat diakses oleh guru yang berwenang. Kami <span class="text-white font-semibold">tidak pernah</span> menjual data siswa ke pihak ketiga atau pengiklan.
-                    </p>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="glass-card rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-rose-500/30 group">
-                    <div class="w-12 h-12 bg-rose-500/10 rounded-xl flex items-center justify-center mb-6 text-rose-400 group-hover:scale-110 transition-transform">
-                        <i data-lucide="gavel" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-rose-300 transition-colors">
-                        Siapa penanggung jawab keputusan?
-                    </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        <span class="text-white font-semibold">Anda, sang Guru.</span> AI memberikan rekomendasi berbasis data, tetapi Anda memiliki kendali penuh untuk menerima, menolak, atau memodifikasi saran tersebut sesuai kebutuhan kelas.
-                    </p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Contact CTA -->
-        <section class="max-w-3xl mx-auto">
-            <div class="glass-card rounded-3xl p-8 md:p-10 text-center relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-violet-500/10"></div>
-                <div class="relative z-10">
-                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Masih Membutuhkan Bantuan?</h2>
-                    <p class="text-gray-300 mb-8">Tim dukungan kami siap membantu Anda memahami platform lebih dalam.</p>
-                    
-                    <a href="#" class="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-8 py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transform hover:-translate-y-1">
-                        <i data-lucide="mail"></i>
-                        Hubungi Kami
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="mt-20 pt-8 border-t border-white/5 text-center">
-            <p class="text-gray-500 text-sm">
-                &copy; 2026 Didaktika AI. Mendukung guru dalam transformasi digital pendidikan.
-            </p>
-        </footer>
-
-    </div>
-
-    <script>
-        lucide.createIcons();
-    </script>
+    });
+  </script>
 </body>
 </html>
